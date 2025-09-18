@@ -4,25 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-// Task to delete AppleDouble files (._*)
-        tasks.register<Delete>("cleanAppleDouble") {
-            delete(fileTree("${projectDir}") {
-                include("**/._*")
-            })
-        }
-
-// Task to delete build folder
-tasks.register<Delete>("cleanBuildFolder") {
-    delete(file("${projectDir}/build"))
-}
-
-// Make every build depend on both tasks
-tasks.named("preBuild") {
-    dependsOn("cleanAppleDouble", "cleanBuildFolder")
-}
-
-
-
 android {
     namespace = "com.acer51.TheZodiacApp"
     compileSdk = 36
