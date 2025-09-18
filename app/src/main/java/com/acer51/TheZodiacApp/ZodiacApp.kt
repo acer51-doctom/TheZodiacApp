@@ -7,6 +7,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
+import androidx.compose.ui.platform.LocalContext
+import com.acer51.thezodiacapp.components.showDatePicker
+
 
 @Composable
 fun ZodiacApp() {
@@ -32,13 +35,15 @@ fun ZodiacApp() {
                 verticalArrangement = Arrangement.Center
             ) {
                 Button(onClick = {
-                    // Replace this with DatePicker if you want
-                    date = LocalDate.of(2000, 5, 15)
-                    tropicalSign = getTropicalZodiac(date)
-                    siderealSign = getSiderealZodiac(date)
+                    showDatePicker(context = LocalContext.current) { pickedDate ->
+                        date = pickedDate
+                        tropicalSign = getTropicalZodiac(date)
+                        siderealSign = getSiderealZodiac(date)
+                    }
                 }) {
                     Text("Pick Birth Date")
                 }
+
 
                 Spacer(Modifier.height(16.dp))
 
