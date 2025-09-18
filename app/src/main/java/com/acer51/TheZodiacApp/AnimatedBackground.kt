@@ -3,6 +3,7 @@ package com.acer51.TheZodiacApp
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -15,8 +16,6 @@ import kotlin.random.Random
 @Composable
 fun AnimatedBackground() {
     val infiniteTransition = rememberInfiniteTransition(label = "stars")
-
-    // Animate star opacity
     val starAlpha by infiniteTransition.animateFloat(
         initialValue = 0.3f,
         targetValue = 1f,
@@ -27,11 +26,12 @@ fun AnimatedBackground() {
         label = "starAlpha"
     )
 
-    // Choose star colors based on theme
-    val starColors = if (MaterialTheme.colorScheme.isLight) {
-        listOf(Color.Black, Color.DarkGray, Color.Gray)
-    } else {
+    // FIX: Use isSystemInDarkTheme() or a similar check to determine the theme mode.
+    // The MaterialTheme.colorScheme does not have an 'isLight' property.
+    val starColors = if (isSystemInDarkTheme()) {
         listOf(Color.White, Color.LightGray, Color.Cyan)
+    } else {
+        listOf(Color.Black, Color.DarkGray, Color.Gray)
     }
 
     Canvas(
@@ -39,10 +39,10 @@ fun AnimatedBackground() {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        for (i in 1..50) { // Draw 50 stars
+        repeat(50) {
             drawCircle(
                 color = starColors.random().copy(alpha = starAlpha),
-                radius = Random.nextInt(1, 4).toFloat(), // Random star size
+                radius = Random.nextInt(1, 4).toFloat(),
                 center = Offset(
                     Random.nextFloat() * size.width,
                     Random.nextFloat() * size.height

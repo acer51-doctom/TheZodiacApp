@@ -45,7 +45,7 @@ fun TheZodiacAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography, // Optional: define Typography separately
+        typography = Typography, // Optional
         content = content
     )
 }
