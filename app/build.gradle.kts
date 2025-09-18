@@ -4,6 +4,18 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+
+tasks.register<Delete>("cleanAppleDouble") {
+    delete(fileTree("build") {
+        include("**/._*")
+    })
+}
+
+tasks.named("clean") {
+    dependsOn("cleanAppleDouble")
+}
+
+
 android {
     namespace = "com.acer51.TheZodiacApp"
     compileSdk = 36
