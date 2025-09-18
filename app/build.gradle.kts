@@ -4,16 +4,23 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+// Task to delete AppleDouble files (._*)
+        tasks.register<Delete>("cleanAppleDouble") {
+            delete(fileTree("${projectDir}") {
+                include("**/._*")
+            })
+        }
 
-tasks.register<Delete>("cleanAppleDouble") {
-    delete(fileTree("build") {
-        include("**/._*")
-    })
+// Task to delete build folder
+tasks.register<Delete>("cleanBuildFolder") {
+    delete(file("${projectDir}/build"))
 }
 
-tasks.named("clean") {
-    dependsOn("cleanAppleDouble")
+// Make every build depend on both tasks
+tasks.named("preBuild") {
+    dependsOn("cleanAppleDouble", "cleanBuildFolder")
 }
+
 
 
 android {
