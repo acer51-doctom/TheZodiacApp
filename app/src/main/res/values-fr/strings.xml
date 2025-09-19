@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_app">L\'appli du Zodiac</string>
+    <string name="tropical_sign_result">🌞Ton Zodiac Tropical est : %1$s</string>
+    <string name="sidereal_sign_result">🌌Ton Zodiac Sidéral est : %1$s</string>
+    <string name="current_birthdate">La date sélectionnée est : %1$s</string>
+    <string name="button_select_birthdate">Sélectionner ma date de naissance</string>
+    <string name="button_learn_more">En savoir plus</string>
+    <string name="button_hide_details">Cacher les détails</string>
+    <string name="disclaimer">NOTE : Nous ne sauvegardons pas vos données</string>
+    <string name="unknown_sign_result">Signe du Zodiac inconnu.</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="popup_info_title">L\'astrologie Tropical vs. Sidérale</string>
+    <string name="popup_info_p1">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string>
+    <string name="popup_info_p2">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string>
+    <string name="popup_info_p3">Tappez juste en-dessous pour connaître les zodiacs différents</string>
+    <string name="popup_show_all_zodiacs">Afficher tous les zodiacs</string>
+    <string name="popup_close">Fermer</string>
+    <string name="popup_list_title">Les signes du Zodiac</string>
+    <string name="aries_name">Bélier</string>
+    <string name="taurus_name">Taureau</string>
+    <string name="gemini_name">Gémeaux</string>
+    <string name="cancer_name">Cancer</string>
+    <string name="leo_name">Lion</string>
+    <string name="virgo_name">Vierge</string>
+    <string name="libra_name">Balance</string>
+    <string name="scorpio_name">Scorpion</string>
+    <string name="sagittarius_name">Sagittaire</string>
+    <string name="capricorn_name">Capricone</string>
+    <string name="aquarius_name">Verseau</string>
+    <string name="pisces_name">Poissons</string>
+    <string name="aries_description">Bélier: énergique, audacieux, pionnier.</string>
+    <string name="taurus_description">Taureau : stable, fiable, ancré.</string>
+    <string name="gemini_description">Gémeaux : curieux, adaptable, sociable.</string>
+    <string name="cancer_description">Cancer : nourrissant, sensible, protecteur.</string>
+    <string name="leo_description">Lion : confiant, créatif, expressif.</string>
+    <string name="virgo_description">Vierge : analytique, pratique, soucieux du détail.</string>
+    <string name="libra_description">Balance : diplomate, charmant(e), équilibré(e).</string>
+    <string name="scorpio_description">Scorpion : intense, passionné, transformateur.</string>
+    <string name="sagittarius_description">Sagittaire : aventureux, optimiste, indépendant.</string>
+    <string name="capricorn_description">Capricorne : discipliné, ambitieux, responsable.</string>
+    <string name="aquarius_description">Verseau : innovateur, humanitaire, libre penseur.</string>
+    <string name="pisces_description">Poissons : compatissant, artistique, empathique.</string>
+</resources>

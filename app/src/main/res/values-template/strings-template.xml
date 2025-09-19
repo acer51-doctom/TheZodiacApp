@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+
+<resources>
+    <!-- App name -->
+    <string name="title_app"></string>
+
+    <!-- UI strings for the main screen -->
+    <string name="tropical_sign_result"></string>
+    <string name="sidereal_sign_result"></string>
+    <string name="current_birthdate"></string>
+    <string name="button_select_birthdate"></string>
+    <string name="button_learn_more"></string>
+    <string name="button_hide_details"></string>
+    <string name="disclaimer"></string>
+    <string name="unknown_sign_result"></string>
+
+    <!-- Strings for the DatePicker dialog -->
+    <string name="dialog_ok"></string>
+    <string name="dialog_cancel"></string>
+
+    <!-- Strings for the "Learn More" popup -->
+    <string name="popup_info_title"></string>
+    <string name="popup_info_p1"></string>
+    <string name="popup_info_p2"></string>
+    <string name="popup_info_p3"></string>
+    <string name="popup_show_all_zodiacs"></string>
+    <string name="popup_close"></string>
+    <string name="popup_list_title"></string>
+
+    <!-- Names of the Zodiac Signs -->
+    <string name="aries_name"></string>
+    <string name="taurus_name"></string>
+    <string name="gemini_name"></string>
+    <string name="cancer_name"></string>
+    <string name="leo_name"></string>
+    <string name="virgo_name"></string>
+    <string name="libra_name"></string>
+    <string name="scorpio_name"></string>
+    <string name="sagittarius_name"></string>
+    <string name="capricorn_name"></string>
+    <string name="aquarius_name"></string>
+    <string name="pisces_name"></string>
+
+    <!-- Descriptions of the Zodiac Signs -->
+    <string name="aries_description"></string>
+    <string name="taurus_description"></string>
+    <string name="gemini_description"></string>
+    <string name="cancer_description"></string>
+    <string name="leo_description"></string>
+    <string name="virgo_description"></string>
+    <string name="libra_description"></string>
+    <string name="scorpio_description"></string>
+    <string name="sagittarius_description"></string>
+    <string name="capricorn_description"></string>
+    <string name="aquarius_description"></string>
+    <string name="pisces_description"></string>
+</resources>

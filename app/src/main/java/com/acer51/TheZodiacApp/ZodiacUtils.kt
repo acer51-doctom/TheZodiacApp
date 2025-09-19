@@ -1,46 +1,51 @@
 package com.acer51.TheZodiacApp
 
 import java.time.LocalDate
+import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.Composable
 
+@Composable
 fun getTropicalZodiac(date: LocalDate): String {
     val day = date.dayOfMonth
     val month = date.monthValue
     return when (month) {
-        1 -> if (day < 20) "Capricorn" else "Aquarius"
-        2 -> if (day < 19) "Aquarius" else "Pisces"
-        3 -> if (day < 21) "Pisces" else "Aries"
-        4 -> if (day < 20) "Aries" else "Taurus"
-        5 -> if (day < 21) "Taurus" else "Gemini"
-        6 -> if (day < 21) "Gemini" else "Cancer"
-        7 -> if (day < 23) "Cancer" else "Leo"
-        8 -> if (day < 23) "Leo" else "Virgo"
-        9 -> if (day < 23) "Virgo" else "Libra"
-        10 -> if (day < 23) "Libra" else "Scorpio"
-        11 -> if (day < 22) "Scorpio" else "Sagittarius"
-        12 -> if (day < 22) "Sagittarius" else "Capricorn"
+        1 -> if (day < 20) stringResource(R.string.capricorn_name) else stringResource(R.string.aquarius_name)
+        2 -> if (day < 19) stringResource(R.string.aquarius_name) else stringResource(R.string.pisces_name)
+        3 -> if (day < 21) stringResource(R.string.pisces_name) else stringResource(R.string.aries_name)
+        4 -> if (day < 20) stringResource(R.string.aries_name) else stringResource(R.string.taurus_name)
+        5 -> if (day < 21) stringResource(R.string.taurus_name) else stringResource(R.string.gemini_name)
+        6 -> if (day < 21) stringResource(R.string.gemini_name) else stringResource(R.string.cancer_name)
+        7 -> if (day < 23) stringResource(R.string.cancer_name) else stringResource(R.string.leo_name)
+        8 -> if (day < 23) stringResource(R.string.leo_name) else stringResource(R.string.virgo_name)
+        9 -> if (day < 23) stringResource(R.string.virgo_name) else stringResource(R.string.libra_name)
+        10 -> if (day < 23) stringResource(R.string.libra_name) else stringResource(R.string.scorpio_name)
+        11 -> if (day < 22) stringResource(R.string.scorpio_name) else stringResource(R.string.sagittarius_name)
+        12 -> if (day < 22) stringResource(R.string.sagittarius_name) else stringResource(R.string.capricorn_name)
         else -> "Unknown"
     }
 }
 
+@Composable
 fun getSiderealZodiac(date: LocalDate): String {
     // Approximate sidereal shift: ~24 days earlier
     return getTropicalZodiac(date.minusDays(24))
 }
 
+@Composable
 fun getZodiacDescriptions(tropical: String, sidereal: String): String {
     val descriptions = mapOf(
-        "Aries" to "Aries: energetic, bold, pioneering.",
-        "Taurus" to "Taurus: steady, reliable, grounded.",
-        "Gemini" to "Gemini: curious, adaptable, sociable.",
-        "Cancer" to "Cancer: nurturing, sensitive, protective.",
-        "Leo" to "Leo: confident, creative, expressive.",
-        "Virgo" to "Virgo: analytical, practical, detail-oriented.",
-        "Libra" to "Libra: diplomatic, charming, balanced.",
-        "Scorpio" to "Scorpio: intense, passionate, transformative.",
-        "Sagittarius" to "Sagittarius: adventurous, optimistic, independent.",
-        "Capricorn" to "Capricorn: disciplined, ambitious, responsible.",
-        "Aquarius" to "Aquarius: innovative, humanitarian, free-thinking.",
-        "Pisces" to "Pisces: compassionate, artistic, empathetic."
+        stringResource(R.string.aries_name) to stringResource(R.string.aries_description),
+        stringResource(R.string.taurus_name) to stringResource(R.string.taurus_description),
+        stringResource(R.string.gemini_name) to stringResource(R.string.gemini_description),
+        stringResource(R.string.cancer_name) to stringResource(R.string.cancer_description),
+        stringResource(R.string.leo_name) to stringResource(R.string.leo_description),
+        stringResource(R.string.virgo_name) to stringResource(R.string.virgo_description),
+        stringResource(R.string.libra_name) to stringResource(R.string.libra_description),
+        stringResource(R.string.scorpio_name) to stringResource(R.string.scorpio_description),
+        stringResource(R.string.sagittarius_name) to stringResource(R.string.sagittarius_description),
+        stringResource(R.string.capricorn_name) to stringResource(R.string.capricorn_description),
+        stringResource(R.string.aquarius_name) to stringResource(R.string.aquarius_description),
+        stringResource(R.string.pisces_name) to stringResource(R.string.pisces_description)
     )
 
     val tropicalDescription = descriptions[tropical] ?: "No description available for Tropical sign."

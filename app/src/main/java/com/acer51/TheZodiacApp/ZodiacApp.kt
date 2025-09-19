@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
@@ -32,7 +33,7 @@ fun ZodiacApp() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("TheZodiacApp") },
+                    title = { Text(stringResource(R.string.app_name)) },
                     colors = TopAppBarDefaults.smallTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
@@ -51,7 +52,7 @@ fun ZodiacApp() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "The Zodiac App",
+                        text = stringResource(R.string.title_app),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -62,13 +63,13 @@ fun ZodiacApp() {
                     if (tropicalSign.isNotEmpty()) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
-                                "Your tropical zodiac sign: $tropicalSign",
+                                stringResource(R.string.tropical_sign_result, tropicalSign),
                                 color = MaterialTheme.colorScheme.onBackground,
                                 style = MaterialTheme.typography.bodyLarge
                             )
                             Spacer(Modifier.height(8.dp))
                             Text(
-                                "Your sidereal zodiac sign: $siderealSign",
+                                stringResource(R.string.sidereal_sign_result, siderealSign),
                                 color = MaterialTheme.colorScheme.onBackground,
                                 style = MaterialTheme.typography.bodyLarge
                             )
@@ -79,7 +80,7 @@ fun ZodiacApp() {
                     // Conditionally show the birthdate display only after a date has been selected.
                     if (date != null) {
                         Text(
-                            text = "Current selected birthdate: ${date.toString()}",
+                            text = stringResource(R.string.current_birthdate, date.toString()),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -97,7 +98,7 @@ fun ZodiacApp() {
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
-                        Text("Select Birthdate")
+                        Text(stringResource(R.string.button_select_birthdate))
                     }
 
                     Spacer(Modifier.height(16.dp))
@@ -109,13 +110,13 @@ fun ZodiacApp() {
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
-                        Text("Learn More")
+                        Text(stringResource(R.string.button_learn_more))
                     }
 
                     Spacer(Modifier.height(32.dp))
 
                     Text(
-                        text = "NOTE: We do not save your data at all.",
+                        text = stringResource(R.string.disclaimer),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center
@@ -145,12 +146,12 @@ fun ZodiacApp() {
                             showDatePicker = false
                         }
                     ) {
-                        Text("OK")
+                        Text(stringResource(R.string.dialog_ok))
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDatePicker = false }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.dialog_cancel))
                     }
                 }
             ) {
