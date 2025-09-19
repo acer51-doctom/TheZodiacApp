@@ -17,7 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun ZodiacApp() {
     TheZodiacAppTheme {
-        var date by remember { mutableStateOf(LocalDate.now()) }
+        // Initialize date to null so it is not displayed on launch
+        var date by remember { mutableStateOf<LocalDate?>(null) }
         var tropicalSign by remember { mutableStateOf("") }
         var siderealSign by remember { mutableStateOf("") }
         var showZodiacsPopup by remember { mutableStateOf(false) }
@@ -57,7 +58,7 @@ fun ZodiacApp() {
 
                     Spacer(Modifier.height(32.dp)) // This spacer has been adjusted for more room
 
-                    // Zodiac signs are now above the buttons
+                    // Conditionally show the zodiac results only after a date has been selected.
                     if (tropicalSign.isNotEmpty()) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
@@ -75,17 +76,21 @@ fun ZodiacApp() {
                         Spacer(Modifier.height(16.dp))
                     }
 
-                    Text(
-                        text = "The current selected birthdate is: ${date.toString()}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    // Conditionally show the birthdate display only after a date has been selected.
+                    if (date != null) {
+                        Text(
+                            text = "Current selected birthdate: ${date.toString()}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        // This spacer adds more space between the birthdate text and the button.
+                        Spacer(Modifier.height(16.dp))
+                    }
 
                     Button(
                         onClick = {
                             showDatePicker = true
-                            tropicalSign = getTropicalZodiac(date)
-                            siderealSign = getSiderealZodiac(date)
+                            // The logic for calculating zodiac signs has been moved to the confirm button in DatePickerDialog
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.secondary,
@@ -110,7 +115,7 @@ fun ZodiacApp() {
                     Spacer(Modifier.height(32.dp))
 
                     Text(
-                        text = "NOTE: We do not save your data.",
+                        text = "NOTE: We do not save your data at all.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center
@@ -133,8 +138,9 @@ fun ZodiacApp() {
                         onClick = {
                             datePickerState.selectedDateMillis?.let { millis ->
                                 date = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
-                                tropicalSign = getTropicalZodiac(date)
-                                siderealSign = getSiderealZodiac(date)
+                                // The zodiac signs are now calculated and shown after confirming the date
+                                tropicalSign = getTropicalZodiac(date!!)
+                                siderealSign = getSiderealZodiac(date!!)
                             }
                             showDatePicker = false
                         }
