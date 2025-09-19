@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name -->
-    <string name="title_app">The Zodiac App</string>
+        <string name="app_name">The Zodiac App</string>
 
     <!-- UI strings for the main screen -->
     <string name="tropical_sign_result">🌞 Your Tropical Zodiac is: %1$s</string>

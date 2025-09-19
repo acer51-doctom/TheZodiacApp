@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_app">L\'appli du Zodiac</string>
+    <string name="app_name">L\'appli du Zodiac</string>
     <string name="tropical_sign_result">🌞Ton Zodiac Tropical est : %1$s</string>
     <string name="sidereal_sign_result">🌌Ton Zodiac Sidéral est : %1$s</string>
     <string name="current_birthdate">La date sélectionnée est : %1$s</string>
