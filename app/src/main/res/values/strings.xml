@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name -->
-        <string name="app_name">The Zodiac App</string>
+    <string name="app_name">The Zodiac App</string>
+    <string name="title_app">The Zodiac App</string>
 
-    <!-- UI strings for the main screen -->
+    <!-- UI strings for the main screen (ZodiacApp.kt) -->
     <string name="tropical_sign_result">🌞 Your Tropical Zodiac is: %1$s</string>
     <string name="sidereal_sign_result">🌌 Your Sidereal Zodiac is: %1$s</string>
     <string name="current_birthdate">Current selected birthdate: %1$s</string>
     <string name="button_select_birthdate">Select Birthdate</string>
     <string name="button_learn_more">Learn More</string>
-    <string name="button_hide_details">Hide Details</string>
+    <!-- <string name="button_hide_details">Hide Details</string> --> <!-- Not currently used -->
     <string name="disclaimer">NOTE: We do not save your data at all.</string>
-    <string name="unknown_sign_result">Unknown Zodiac Sign</string>
 
     <!-- Strings for the DatePicker dialog -->
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
 
-    <!-- Strings for the "Learn More" popup -->
-    <string name="popup_info_title">Tropical vs. Sidereal Astrology</string>
-    <string name="popup_info_p1">Your tropical sign is based on the position of the sun relative to the seasons on the date of your birth. This is the most common form of astrology in the Western world.</string>
-    <string name="popup_info_p2">Your sidereal sign is based on the position of the sun relative to the actual constellations in the sky. Because the Earth wobbles on its axis over time, the sidereal zodiac has shifted. This is more common in Vedic astrology. Due to this shift, your sidereal sign is often different from your tropical sign.</string>
-    <string name="popup_info_p3">Tap below to learn about the different zodiacs!</string>
-    <string name="popup_show_all_zodiacs">Show All Zodiacs</string>
-    <string name="popup_close">Close</string>
-    <string name="popup_list_title">Zodiac Signs</string>
+    <!-- Strings for the "Learn More" popup (ZodiacInfoPopup.kt & getZodiacDescriptions) -->
+    <string name="popup_detailed_info_title">About Your Zodiac Signs</string>
 
-    <!-- Names of the Zodiac Signs -->
+    <!-- These are used by getZodiacDescriptions in ZodiacUtils.kt -->
+    <string name="tropical_vs_sidereal_header">Tropical vs. Sidereal Astrology</string>
+    <string name="tropical_explanation">Your tropical sign is based on the position of the sun relative to the seasons on the date of your birth. This is the most common form of astrology in the Western world.</string>
+    <string name="sidereal_explanation">Your sidereal sign is based on the position of the sun relative to the actual constellations in the sky. Because the Earth wobbles on its axis over time, the sidereal zodiac has shifted. This is more common in Vedic astrology. Due to this shift, your sidereal sign is often different from your tropical sign.</string>
+    <string name="your_tropical_sign_label">Your Tropical Sign</string>
+    <string name="your_sidereal_sign_label">Your Sidereal Sign</string>
+    <string name="no_description_available">No specific description available for this sign.</string>
+
+    <!-- String for ZodiacInfoPopup, can be used to prompt to see all signs -->
+    <string name="popup_info_p3">Tap below to learn about all the different zodiacs!</string>
+
+    <!-- Strings for ZodiacListPopup.kt (invoked from ZodiacInfoPopup.kt) -->
+    <string name="popup_show_all_zodiacs">Show All Zodiac Signs</string>
+    <string name="popup_list_title">Zodiac Signs</string>
+    <string name="popup_close">Close</string>
+
+    <!-- Names of the Zodiac Signs (Used by ZodiacUtils.getLocalizedZodiacName and ZodiacListPopup) -->
     <string name="aries_name">Aries</string>
     <string name="taurus_name">Taurus</string>
     <string name="gemini_name">Gemini</string>
@@ -39,8 +49,9 @@
     <string name="capricorn_name">Capricorn</string>
     <string name="aquarius_name">Aquarius</string>
     <string name="pisces_name">Pisces</string>
+    <string name="unknown_sign_name">Unknown Sign</string>
 
-    <!-- Descriptions of the Zodiac Signs -->
+    <!-- Descriptions of the Zodiac Signs (Used by ZodiacUtils.getZodiacDescriptions) -->
     <string name="aries_description">Aries: energetic, bold, pioneering.</string>
     <string name="taurus_description">Taurus: steady, reliable, grounded.</string>
     <string name="gemini_description">Gemini: curious, adaptable, sociable.</string>

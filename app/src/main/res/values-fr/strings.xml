@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App name -->
     <string name="app_name">L\'appli du Zodiac</string>
-    <string name="tropical_sign_result">🌞Ton Zodiac Tropical est : %1$s</string>
-    <string name="sidereal_sign_result">🌌Ton Zodiac Sidéral est : %1$s</string>
+    <string name="title_app">L\'appli du Zodiac</string>
+
+    <!-- UI strings for the main screen (ZodiacApp.kt) -->
+    <string name="tropical_sign_result">🌞 Ton Zodiac Tropical est : %1$s</string>
+    <string name="sidereal_sign_result">🌌 Ton Zodiac Sidéral est : %1$s</string>
     <string name="current_birthdate">La date sélectionnée est : %1$s</string>
     <string name="button_select_birthdate">Sélectionner ma date de naissance</string>
     <string name="button_learn_more">En savoir plus</string>
-    <string name="button_hide_details">Cacher les détails</string>
-    <string name="disclaimer">NOTE : Nous ne sauvegardons pas vos données</string>
-    <string name="unknown_sign_result">Signe du Zodiac inconnu.</string>
+    <!-- <string name="button_hide_details">Cacher les détails</string> --> <!-- Not currently used -->
+    <string name="disclaimer">NOTE : Nous ne sauvegardons pas vos données.</string> <!-- Adjusted slightly from your original -->
+
+    <!-- Strings for the DatePicker dialog -->
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Annuler</string>
-    <string name="popup_info_title">L\'astrologie Tropical vs. Sidérale</string>
-    <string name="popup_info_p1">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string>
-    <string name="popup_info_p2">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string>
-    <string name="popup_info_p3">Tappez juste en-dessous pour connaître les zodiacs différents</string>
-    <string name="popup_show_all_zodiacs">Afficher tous les zodiacs</string>
+
+    <!-- Strings for the "Learn More" popup (ZodiacInfoPopup.kt & getZodiacDescriptions) -->
+    <string name="popup_detailed_info_title">À propos des signes du Zodiac</string>
+
+    <!-- These are used by getZodiacDescriptions in ZodiacUtils.kt -->
+    <string name="tropical_vs_sidereal_header">L\'astrologie Sidérale vs. Tropicale</string>
+    <string name="tropical_explanation">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string> <!-- From your original popup_info_p1 -->
+    <string name="sidereal_explanation">Votre signe sidéral est basé sur la position du soleil par rapport aux constellations réelles dans le ciel. Parce que la Terre oscille sur son axe avec le temps, le zodiaque sidéral s\'est décalé. Ceci est plus courant en astrologie védique. En raison de ce décalage, votre signe sidéral est souvent différent de votre signe tropical.</string> <!-- Based on your original popup_info_p2, slightly rephrased for context -->
+    <string name="your_tropical_sign_label">Ton signe Tropical</string>
+    <string name="your_sidereal_sign_label">Ton signe Sidéral</string>
+    <string name="no_description_available">Aucune description disponible pour celui-ci.</string>
+
+    <!-- String for ZodiacInfoPopup, can be used to prompt to see all signs -->
+    <string name="popup_info_p3">Appuyez ci-dessous pour découvrir tous les différents zodiaques !</string> <!-- Adjusted slightly from your original -->
+
+    <!-- Strings for ZodiacListPopup.kt (invoked from ZodiacInfoPopup.kt) -->
+    <string name="popup_show_all_zodiacs">Afficher tous les signes du zodiaque</string> <!-- Adjusted slightly from your original -->
+    <string name="popup_list_title">Les signes du Zodiaque</string>
     <string name="popup_close">Fermer</string>
-    <string name="popup_list_title">Les signes du Zodiac</string>
+
+    <!-- Names of the Zodiac Signs (Used by ZodiacUtils.getLocalizedZodiacName and ZodiacListPopup) -->
     <string name="aries_name">Bélier</string>
     <string name="taurus_name">Taureau</string>
     <string name="gemini_name">Gémeaux</string>
@@ -27,10 +46,13 @@
     <string name="libra_name">Balance</string>
     <string name="scorpio_name">Scorpion</string>
     <string name="sagittarius_name">Sagittaire</string>
-    <string name="capricorn_name">Capricone</string>
+    <string name="capricorn_name">Capricorne</string> <!-- Corrected spelling from your original -->
     <string name="aquarius_name">Verseau</string>
     <string name="pisces_name">Poissons</string>
-    <string name="aries_description">Bélier: énergique, audacieux, pionnier.</string>
+    <string name="unknown_sign_name">Signe inconnu</string> <!-- From your original unknown_sign_result for consistency -->
+
+    <!-- Descriptions of the Zodiac Signs (Used by ZodiacUtils.getZodiacDescriptions) -->
+    <string name="aries_description">Bélier : énergique, audacieux, pionnier.</string>
     <string name="taurus_description">Taureau : stable, fiable, ancré.</string>
     <string name="gemini_description">Gémeaux : curieux, adaptable, sociable.</string>
     <string name="cancer_description">Cancer : nourrissant, sensible, protecteur.</string>

@@ -22,8 +22,9 @@ If you wanna help translating, you will need git and Android Studio.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App name -->
+    <!-- App name (should be the same for both) -->
     <string name="title_app"></string>
+    <string name="app_name"></string>"
 
     <!-- UI strings for the main screen -->
     <string name="tropical_sign_result"></string>

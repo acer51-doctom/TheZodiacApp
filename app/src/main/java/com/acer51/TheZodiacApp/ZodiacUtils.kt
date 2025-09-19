@@ -1,38 +1,42 @@
 package com.acer51.TheZodiacApp
 
-import java.time.LocalDate
-import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource // Keep this for getZodiacDescriptions and getLocalizedZodiacName
+import java.time.LocalDate
 
-@Composable
-fun getTropicalZodiac(date: LocalDate): String {
+// This function is NO LONGER @Composable and returns a plain String
+fun getTropicalZodiacNonComposable(date: LocalDate): String {
     val day = date.dayOfMonth
     val month = date.monthValue
     return when (month) {
-        1 -> if (day < 20) stringResource(R.string.capricorn_name) else stringResource(R.string.aquarius_name)
-        2 -> if (day < 19) stringResource(R.string.aquarius_name) else stringResource(R.string.pisces_name)
-        3 -> if (day < 21) stringResource(R.string.pisces_name) else stringResource(R.string.aries_name)
-        4 -> if (day < 20) stringResource(R.string.aries_name) else stringResource(R.string.taurus_name)
-        5 -> if (day < 21) stringResource(R.string.taurus_name) else stringResource(R.string.gemini_name)
-        6 -> if (day < 21) stringResource(R.string.gemini_name) else stringResource(R.string.cancer_name)
-        7 -> if (day < 23) stringResource(R.string.cancer_name) else stringResource(R.string.leo_name)
-        8 -> if (day < 23) stringResource(R.string.leo_name) else stringResource(R.string.virgo_name)
-        9 -> if (day < 23) stringResource(R.string.virgo_name) else stringResource(R.string.libra_name)
-        10 -> if (day < 23) stringResource(R.string.libra_name) else stringResource(R.string.scorpio_name)
-        11 -> if (day < 22) stringResource(R.string.scorpio_name) else stringResource(R.string.sagittarius_name)
-        12 -> if (day < 22) stringResource(R.string.sagittarius_name) else stringResource(R.string.capricorn_name)
-        else -> "Unknown"
+        1 -> if (day < 20) "Capricorn" else "Aquarius"
+        2 -> if (day < 19) "Aquarius" else "Pisces"
+        3 -> if (day < 21) "Pisces" else "Aries"
+        4 -> if (day < 20) "Aries" else "Taurus"
+        5 -> if (day < 21) "Taurus" else "Gemini"
+        6 -> if (day < 21) "Gemini" else "Cancer"
+        7 -> if (day < 23) "Cancer" else "Leo"
+        8 -> if (day < 23) "Leo" else "Virgo"
+        9 -> if (day < 23) "Virgo" else "Libra"
+        10 -> if (day < 23) "Libra" else "Scorpio"
+        11 -> if (day < 22) "Scorpio" else "Sagittarius"
+        12 -> if (day < 22) "Sagittarius" else "Capricorn"
+        else -> "Unknown" // Default case
     }
 }
 
-@Composable
-fun getSiderealZodiac(date: LocalDate): String {
-    // Approximate sidereal shift: ~24 days earlier
-    return getTropicalZodiac(date.minusDays(24))
+// This function is NO LONGER @Composable and returns a plain String
+fun getSiderealZodiacNonComposable(date: LocalDate): String {
+    return getTropicalZodiacNonComposable(date.minusDays(24)) // Approximate sidereal shift
 }
 
+// This function REMAINS @Composable because it uses stringResource directly
+// and is intended to be called from a Composable context to build a display string.
 @Composable
-fun getZodiacDescriptions(tropical: String, sidereal: String): String {
+fun getZodiacDescriptions(tropicalSignName: String, siderealSignName: String): String {
+    val tropicalNameLocalized = getLocalizedZodiacName(tropicalSignName)
+    val siderealNameLocalized = getLocalizedZodiacName(siderealSignName)
+
     val descriptions = mapOf(
         stringResource(R.string.aries_name) to stringResource(R.string.aries_description),
         stringResource(R.string.taurus_name) to stringResource(R.string.taurus_description),
@@ -48,16 +52,42 @@ fun getZodiacDescriptions(tropical: String, sidereal: String): String {
         stringResource(R.string.pisces_name) to stringResource(R.string.pisces_description)
     )
 
-    val tropicalDescription = descriptions[tropical] ?: "No description available for Tropical sign."
-    val siderealDescription = descriptions[sidereal] ?: "No description available for Sidereal sign."
+    val tropicalDescription = descriptions[tropicalNameLocalized] ?: "No description for $tropicalNameLocalized"
+    val siderealDescription = descriptions[siderealNameLocalized] ?: "No description for $siderealNameLocalized"
 
-    return "Tropical vs. Sidereal Astrology:\n\n" +
-            "Your tropical sign is based on the position of the sun relative to the seasons on the date of your birth. " +
-            "This is the most common form of astrology in the Western world.\n\n" +
-            "Your sidereal sign is based on the position of the sun relative to the actual constellations in the sky. " +
-            "Because the Earth wobbles on its axis over time, the sidereal zodiac has shifted. " +
-            "This is more common in Vedic astrology. Due to this shift, your sidereal sign is often different from your tropical sign." +
-            "\n\n---" +
-            "\n\n**Your Tropical Sign ($tropical):**\n$tropicalDescription" +
-            "\n\n**Your Sidereal Sign ($sidereal):**\n$siderealDescription"
+    // Using the general explanation strings from your strings.xml
+    val explanationHeader = stringResource(R.string.tropical_vs_sidereal_header) // Make sure this exists
+    val tropicalExplanation = stringResource(R.string.tropical_explanation) // Make sure this exists
+    val siderealExplanation = stringResource(R.string.sidereal_explanation) // Make sure this exists
+    val yourTropicalSignLabel = stringResource(R.string.your_tropical_sign_label) // Make sure this exists
+    val yourSiderealSignLabel = stringResource(R.string.your_sidereal_sign_label) // Make sure this exists
+
+    return "$explanationHeader\n\n" +
+            "$tropicalExplanation\n\n" +
+            "$siderealExplanation\n\n" +
+            "---\n\n" +
+            "**$yourTropicalSignLabel ($tropicalNameLocalized):**\n$tropicalDescription\n\n" +
+            "**$yourSiderealSignLabel ($siderealNameLocalized):**\n$siderealDescription"
 }
+
+// This helper is for localizing the plain string names (Aries, Taurus, etc.)
+// that getTropicalZodiacNonComposable returns.
+@Composable
+fun getLocalizedZodiacName(signName: String): String {
+    return when (signName) {
+        "Aries" -> stringResource(R.string.aries_name)
+        "Taurus" -> stringResource(R.string.taurus_name)
+        "Gemini" -> stringResource(R.string.gemini_name)
+        "Cancer" -> stringResource(R.string.cancer_name)
+        "Leo" -> stringResource(R.string.leo_name)
+        "Virgo" -> stringResource(R.string.virgo_name)
+        "Libra" -> stringResource(R.string.libra_name)
+        "Scorpio" -> stringResource(R.string.scorpio_name)
+        "Sagittarius" -> stringResource(R.string.sagittarius_name)
+        "Capricorn" -> stringResource(R.string.capricorn_name)
+        "Aquarius" -> stringResource(R.string.aquarius_name)
+        "Pisces" -> stringResource(R.string.pisces_name)
+        else -> signName // Fallback for "Unknown" or other cases
+    }
+}
+    
