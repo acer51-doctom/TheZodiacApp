@@ -12,6 +12,7 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+val DarkGray = Color(0xFF121212) // Added a new color for the lighter dark background
 
 // Light and Dark Color Schemes
 private val LightColors = lightColorScheme(
@@ -28,8 +29,8 @@ private val LightColors = lightColorScheme(
 private val DarkColors = darkColorScheme(
     primary = Purple200,
     secondary = Teal200,
-    background = Black,
-    surface = Black,
+    background = DarkGray, // Changed the background to a lighter dark gray
+    surface = DarkGray, // Also changed the surface to match
     onPrimary = Black,
     onSecondary = White,
     onBackground = White,
@@ -45,7 +46,7 @@ fun TheZodiacAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography, // Optional
+        typography = Typography,
         content = content
     )
 }
