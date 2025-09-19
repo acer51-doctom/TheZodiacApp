@@ -10,6 +10,7 @@ import java.time.LocalDate
 import java.time.Instant
 import java.time.ZoneId
 import com.acer51.TheZodiacApp.ui.theme.TheZodiacAppTheme
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -18,11 +19,13 @@ fun ZodiacApp() {
         var date by remember { mutableStateOf(LocalDate.now()) }
         var tropicalSign by remember { mutableStateOf("") }
         var siderealSign by remember { mutableStateOf("") }
-        var showDetails by remember { mutableStateOf(false) }
+        var showZodiacsPopup by remember { mutableStateOf(false) }
 
         // State to control the visibility of the DatePickerDialog
         var showDatePicker by remember { mutableStateOf(false) }
         val datePickerState = rememberDatePickerState()
+
+        val context = LocalContext.current
 
         Scaffold(
             topBar = {
@@ -45,68 +48,82 @@ fun ZodiacApp() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
+                    Text(
+                        text = "The Zodiac App",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    Spacer(Modifier.height(16.dp))
+
+                    // Zodiac signs are now above the buttons
+                    if (tropicalSign.isNotEmpty()) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                "Your tropical zodiac sign: $tropicalSign",
+                                color = MaterialTheme.colorScheme.onBackground,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                "Your sidereal zodiac sign: $siderealSign",
+                                color = MaterialTheme.colorScheme.onBackground,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                        Spacer(Modifier.height(16.dp))
+                    }
+
+                    Text(
+                        text = "Your birthdate: ${date.toString()}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+
                     Button(
                         onClick = {
-                            // Show the date picker dialog when the button is clicked
                             showDatePicker = true
+                            tropicalSign = getTropicalZodiac(date)
+                            siderealSign = getSiderealZodiac(date)
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
-                        Text("Pick Birth Date")
+                        Text("Select Birthdate")
                     }
 
                     Spacer(Modifier.height(16.dp))
 
-                    if (tropicalSign.isNotEmpty()) {
-                        Text(
-                            "🌞 Tropical Zodiac: $tropicalSign",
-                            color = MaterialTheme.colorScheme.onBackground
+                    Button(
+                        onClick = { showZodiacsPopup = true },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
                         )
-                        Text(
-                            "🌌 Sidereal Zodiac: $siderealSign",
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
-
-                        Spacer(Modifier.height(16.dp))
-
-                        Button(
-                            onClick = { showDetails = !showDetails },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.secondary,
-                                contentColor = MaterialTheme.colorScheme.onSecondary
-                            )
-                        ) {
-                            Text(if (showDetails) "Hide Details" else "Learn More")
-                        }
-
-                        if (showDetails) {
-                            Text(
-                                text = getZodiacDescriptions(tropicalSign, siderealSign),
-                                color = MaterialTheme.colorScheme.onBackground,
-                                modifier = Modifier.padding(top = 12.dp)
-                            )
-                        }
+                    ) {
+                        Text("Learn More")
                     }
                 }
             }
         }
 
-        // Display the DatePickerDialog only when showDatePicker is true
+        if (showZodiacsPopup) {
+            ZodiacInfoPopup(onDismiss = { showZodiacsPopup = false })
+        }
+
         if (showDatePicker) {
             DatePickerDialog(
                 onDismissRequest = {
-                    // Dismiss the dialog without confirming the selection
                     showDatePicker = false
                 },
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            // Convert the selected date from milliseconds to LocalDate
                             datePickerState.selectedDateMillis?.let { millis ->
                                 date = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
+                                tropicalSign = getTropicalZodiac(date)
+                                siderealSign = getSiderealZodiac(date)
                             }
                             showDatePicker = false
                         }

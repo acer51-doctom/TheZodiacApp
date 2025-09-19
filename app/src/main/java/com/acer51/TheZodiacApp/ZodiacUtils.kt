@@ -40,9 +40,19 @@ fun getZodiacDescriptions(tropical: String, sidereal: String): String {
         "Sagittarius" to "Sagittarius: adventurous, optimistic, independent.",
         "Capricorn" to "Capricorn: disciplined, ambitious, responsible.",
         "Aquarius" to "Aquarius: innovative, humanitarian, free-thinking.",
-        "Pisces" to "Pisces: empathetic, imaginative, dreamy."
+        "Pisces" to "Pisces: compassionate, artistic, empathetic."
     )
 
-    return "🌞 Tropical ($tropical): ${descriptions[tropical] ?: ""}\n\n" +
-            "🌌 Sidereal ($sidereal): ${descriptions[sidereal] ?: ""}"
+    val tropicalDescription = descriptions[tropical] ?: "No description available for Tropical sign."
+    val siderealDescription = descriptions[sidereal] ?: "No description available for Sidereal sign."
+
+    return "Tropical vs. Sidereal Astrology:\n\n" +
+            "Your tropical sign is based on the position of the sun relative to the seasons on the date of your birth. " +
+            "This is the most common form of astrology in the Western world.\n\n" +
+            "Your sidereal sign is based on the position of the sun relative to the actual constellations in the sky. " +
+            "Because the Earth wobbles on its axis over time, the sidereal zodiac has shifted. " +
+            "This is more common in Vedic astrology. Due to this shift, your sidereal sign is often different from your tropical sign." +
+            "\n\n---" +
+            "\n\n**Your Tropical Sign ($tropical):**\n$tropicalDescription" +
+            "\n\n**Your Sidereal Sign ($sidereal):**\n$siderealDescription"
 }

@@ -20,14 +20,12 @@ fun AnimatedBackground() {
         initialValue = 0.3f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(3000, easing = LinearEasing),
+            animation = tween(8000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         ),
         label = "starAlpha"
     )
 
-    // FIX: Use isSystemInDarkTheme() or a similar check to determine the theme mode.
-    // The MaterialTheme.colorScheme does not have an 'isLight' property.
     val starColors = if (isSystemInDarkTheme()) {
         listOf(Color.White, Color.LightGray, Color.Cyan)
     } else {
