@@ -16,3 +16,6 @@ local.properties
 ._*
 keys/
 app/debug/*
+app/release/*
+.idea
+.kotlin
