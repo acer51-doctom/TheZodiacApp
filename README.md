@@ -7,3 +7,4 @@ To use it, you simply need to put in your birthdate and it will print your Tropi
 
 ## When is it coming to the Play Store?
 Around Christmas.
+
