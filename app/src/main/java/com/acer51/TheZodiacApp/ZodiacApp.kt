@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.Instant
@@ -38,7 +39,7 @@ fun ZodiacApp() {
             }
         ) { padding ->
             Box(modifier = Modifier.fillMaxSize()) {
-                AnimatedBackground()
+                // The AnimatedBackground composable has been removed.
 
                 Column(
                     modifier = Modifier
@@ -53,7 +54,8 @@ fun ZodiacApp() {
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
-                    Spacer(Modifier.height(16.dp))
+
+                    Spacer(Modifier.height(32.dp)) // This spacer has been adjusted for more room
 
                     // Zodiac signs are now above the buttons
                     if (tropicalSign.isNotEmpty()) {
@@ -74,7 +76,7 @@ fun ZodiacApp() {
                     }
 
                     Text(
-                        text = "Your birthdate: ${date.toString()}",
+                        text = "The current selected birthdate is: ${date.toString()}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -104,6 +106,15 @@ fun ZodiacApp() {
                     ) {
                         Text("Learn More")
                     }
+
+                    Spacer(Modifier.height(32.dp))
+
+                    Text(
+                        text = "NOTE: We do not save your data.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }
