@@ -1,13 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
-<!-- THIS IS A TEMPLATE FILE!! DUPLICATE IT!!! -->
+# TRANSLATE.md
 
+If you wanna help translating, you will need git and Android Studio.
+
+## Download part.
+1. Download Android Studio IDE.
+2. Install git.
+3. Clone this repository and cd into it.
+3.1. Make a new branch following this scheme: `language/<language_REGION>`. Don't put any region code for international.
+
+## On-machine part.
+1. Create a folder in `app/res/` and name it `values-<country_code>`. Create a file named `strings.xml` in it.
+1.1. OR, you can just right click the res folder, New > Android Resource Directory
+1.2. In the left column, choose "Locale"
+1.3. Click the 2 arrows button that points to the **right**.
+1.4. Select the language.
+1.5. Select the region. (e.g: German)
+1.6. Go into the folder created. It usually follows this scheme: `values-<country-code>`
+1.7. Open the file named `strings.xml`
+2. Using the following template (just copy and paste into the file), translate into it. You can also use the language editor (basically a GUI front end if you figure it out).
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name -->
     <string name="title_app"></string>
@@ -63,3 +76,6 @@
     <string name="aquarius_description"></string>
     <string name="pisces_description"></string>
 </resources>
+```
+
+Base yourself off of the English translations to translate.
