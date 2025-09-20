@@ -19,3 +19,6 @@ It's normal. We don't have an icon yet.
 
 ## Credits
 [Follow this MD.](CREDITS.md)
+
+## To-do list
+[Follow this MD.](TODO.md)
