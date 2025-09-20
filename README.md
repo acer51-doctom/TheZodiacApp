@@ -16,3 +16,6 @@ It's normal. We don't have an icon yet.
 
 ## Translating
 [Follow this MD.](TRANSLATE.md)
+
+## Credits
+[Follow this MD.](CREDITS.md)
