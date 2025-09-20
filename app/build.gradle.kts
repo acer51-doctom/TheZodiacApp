@@ -25,6 +25,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    
+    applicationVariants.all {
+        outputs.all {
+            val buildTypeName = name // debug or release
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                "TheZodiacApp-${buildTypeName}.apk"
+        }
+    }
 }
 
 // Line 39 to 44:
@@ -50,7 +58,3 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4") // Corrected line
 }
-
-// Update the lines before the dependencies block.
-
-// I know where you live >:(
