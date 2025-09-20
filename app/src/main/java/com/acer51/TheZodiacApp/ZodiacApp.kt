@@ -14,14 +14,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.Instant
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter // For formatting the date
 import com.acer51.TheZodiacApp.ui.theme.TheZodiacAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,8 +29,8 @@ fun ZodiacApp() {
         var date by remember { mutableStateOf<LocalDate?>(null) }
         var tropicalSignName by remember { mutableStateOf("") }
         var siderealSignName by remember { mutableStateOf("") }
-        var showZodiacInfoPopup by remember { mutableStateOf(false) }
-        var showZodiacListPopup by remember { mutableStateOf(false) }
+        var showZodiacInfoPopup by remember { mutableStateOf(false) } // Renamed from showZodiacsPopup for clarity
+        var showZodiacListPopup by remember { mutableStateOf(false) } // Added state for the list popup
 
         var showDatePicker by remember { mutableStateOf(false) }
         val datePickerState = rememberDatePickerState()
@@ -67,13 +65,13 @@ fun ZodiacApp() {
                 if (tropicalSignName.isNotEmpty()) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = "🌞 Your Tropical Zodiac is: ${getLocalizedZodiacName(tropicalSignName)}",
+                            text = stringResource(R.string.tropical_sign_result, getLocalizedZodiacName(tropicalSignName)),
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = "🌌 Your Sidereal Zodiac is: ${getLocalizedZodiacName(siderealSignName)}",
+                            text = stringResource(R.string.sidereal_sign_result, getLocalizedZodiacName(siderealSignName)),
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.bodyLarge
                         )
@@ -82,6 +80,7 @@ fun ZodiacApp() {
                 }
 
                 date?.let {
+                    // Format the date for display
                     val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
                     Text(
                         text = stringResource(R.string.current_birthdate, it.format(formatter)),
@@ -103,21 +102,23 @@ fun ZodiacApp() {
 
                 Spacer(Modifier.height(16.dp))
 
-                Row(
+                Row( // Use a Row for multiple buttons side-by-side
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Button(
-                        onClick = { showZodiacInfoPopup = true },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            contentColor = MaterialTheme.colorScheme.onSecondary
-                        )
-                    ) {
-                        Text(stringResource(R.string.button_learn_more))
+                    if (tropicalSignName.isNotEmpty()) { // Only show if signs are calculated
+                        Button(
+                            onClick = { showZodiacInfoPopup = true },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
+                            )
+                        ) {
+                            Text(stringResource(R.string.button_learn_more))
+                        }
                     }
 
-                    // Re-adding the button to open the Zodiac list popup
+                    // Button to always show the list of all zodiacs
                     Button(
                         onClick = { showZodiacListPopup = true },
                         colors = ButtonDefaults.buttonColors(
@@ -125,9 +126,10 @@ fun ZodiacApp() {
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
-                        Text(stringResource(R.string.button_zodiac_list))
+                        Text(stringResource(R.string.button_zodiac_list)) // Ensure R.string.button_zodiac_list exists
                     }
                 }
+
 
                 Spacer(Modifier.height(32.dp))
 
@@ -140,14 +142,10 @@ fun ZodiacApp() {
             }
         }
 
-        if (showZodiacInfoPopup) {
-            val descriptionText = if (tropicalSignName.isNotEmpty()) {
-                getZodiacDescriptions(tropicalSignName, siderealSignName)
-            } else {
-                ""
-            }
+        if (showZodiacInfoPopup) { // tropicalSignName check is done before setting this true
+            val detailedDescription = getZodiacDescriptions(tropicalSignName, siderealSignName)
             ZodiacInfoPopup(
-                descriptionText = descriptionText,
+                descriptionText = detailedDescription,
                 onDismiss = { showZodiacInfoPopup = false }
             )
         }
@@ -156,9 +154,12 @@ fun ZodiacApp() {
             ZodiacListPopup(onDismiss = { showZodiacListPopup = false })
         }
 
+
         if (showDatePicker) {
             DatePickerDialog(
-                onDismissRequest = { showDatePicker = false },
+                onDismissRequest = {
+                    showDatePicker = false
+                },
                 confirmButton = {
                     TextButton(
                         onClick = {
