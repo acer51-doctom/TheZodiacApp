@@ -10,6 +10,7 @@
     <string name="current_birthdate">Current selected birthdate: %1$s</string>
     <string name="button_select_birthdate">Select Birthdate</string>
     <string name="button_learn_more">Learn More</string>
+    <string name="button_zodiac_list">Show All Zodiac Signs</string>
     <!-- <string name="button_hide_details">Hide Details</string> --> <!-- Not currently used -->
     <string name="disclaimer">NOTE: We do not save your data at all.</string>
 

@@ -21,18 +21,18 @@ import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import com.acer51.TheZodiacApp.ui.theme.TheZodiacAppTheme
-// LocalContext is not used in this version, so it can be removed if not needed elsewhere
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ZodiacApp() {
     TheZodiacAppTheme {
         var date by remember { mutableStateOf<LocalDate?>(null) }
-        // These will now store the plain string names (e.g., "Aries", "Taurus")
         var tropicalSignName by remember { mutableStateOf("") }
         var siderealSignName by remember { mutableStateOf("") }
-        var showZodiacsPopup by remember { mutableStateOf(false) }
+        var showZodiacInfoPopup by remember { mutableStateOf(false) }
+        var showZodiacListPopup by remember { mutableStateOf(false) }
 
         var showDatePicker by remember { mutableStateOf(false) }
         val datePickerState = rememberDatePickerState()
@@ -41,7 +41,7 @@ fun ZodiacApp() {
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(R.string.app_name)) },
-                    colors = TopAppBarDefaults.topAppBarColors( // Use topAppBarColors for M3
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -51,7 +51,7 @@ fun ZodiacApp() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues) // Use the paddingValues from Scaffold
+                    .padding(paddingValues)
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -67,14 +67,13 @@ fun ZodiacApp() {
                 if (tropicalSignName.isNotEmpty()) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            // Use getLocalizedZodiacName to display the translated sign
-                            text = stringResource(R.string.tropical_sign_result, getLocalizedZodiacName(tropicalSignName)),
+                            text = "🌞 Your Tropical Zodiac is: ${getLocalizedZodiacName(tropicalSignName)}",
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.sidereal_sign_result, getLocalizedZodiacName(siderealSignName)),
+                            text = "🌌 Your Sidereal Zodiac is: ${getLocalizedZodiacName(siderealSignName)}",
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.bodyLarge
                         )
@@ -83,8 +82,9 @@ fun ZodiacApp() {
                 }
 
                 date?.let {
+                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
                     Text(
-                        text = stringResource(R.string.current_birthdate, it.toString()),
+                        text = stringResource(R.string.current_birthdate, it.format(formatter)),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -103,16 +103,29 @@ fun ZodiacApp() {
 
                 Spacer(Modifier.height(16.dp))
 
-                // Only show "Learn More" if signs have been calculated
-                if (tropicalSignName.isNotEmpty()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Button(
-                        onClick = { showZodiacsPopup = true },
+                        onClick = { showZodiacInfoPopup = true },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.secondary,
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
                         Text(stringResource(R.string.button_learn_more))
+                    }
+
+                    // Re-adding the button to open the Zodiac list popup
+                    Button(
+                        onClick = { showZodiacListPopup = true },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
+                        )
+                    ) {
+                        Text(stringResource(R.string.button_zodiac_list))
                     }
                 }
 
@@ -127,29 +140,31 @@ fun ZodiacApp() {
             }
         }
 
-        if (showZodiacsPopup && tropicalSignName.isNotEmpty()) {
-            // Generate the detailed description string
-            val detailedDescription = getZodiacDescriptions(tropicalSignName, siderealSignName)
-
-            ZodiacInfoPopup( // Call the updated ZodiacInfoPopup
-                descriptionText = detailedDescription,
-                onDismiss = { showZodiacsPopup = false }
+        if (showZodiacInfoPopup) {
+            val descriptionText = if (tropicalSignName.isNotEmpty()) {
+                getZodiacDescriptions(tropicalSignName, siderealSignName)
+            } else {
+                ""
+            }
+            ZodiacInfoPopup(
+                descriptionText = descriptionText,
+                onDismiss = { showZodiacInfoPopup = false }
             )
         }
 
+        if (showZodiacListPopup) {
+            ZodiacListPopup(onDismiss = { showZodiacListPopup = false })
+        }
 
         if (showDatePicker) {
             DatePickerDialog(
-                onDismissRequest = {
-                    showDatePicker = false
-                },
+                onDismissRequest = { showDatePicker = false },
                 confirmButton = {
                     TextButton(
                         onClick = {
                             datePickerState.selectedDateMillis?.let { millis ->
                                 val selectedDate = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
                                 date = selectedDate
-                                // Call the NON-COMPOSABLE versions from ZodiacUtils
                                 tropicalSignName = getTropicalZodiacNonComposable(selectedDate)
                                 siderealSignName = getSiderealZodiacNonComposable(selectedDate)
                             }
@@ -172,41 +187,3 @@ fun ZodiacApp() {
         }
     }
 }
-
-// A simple popup to display a title and text.
-// You can replace ZodiacInfoPopup with this or adapt ZodiacInfoPopup.
-@Composable
-fun SimpleInfoPopup(title: String, text: String, onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = onDismiss) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant // Or surface
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant, // Or onSurface
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    text = text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant // Or onSurface
-                )
-                TextButton(onClick = onDismiss) {
-                    Text(stringResource(R.string.popup_close))
-                }
-            }
-        }
-    }
-}
-    

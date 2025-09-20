@@ -7,67 +7,60 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 @Composable
-fun ZodiacListPopup(onDismiss: () -> Unit) {
-    val zodiacs = listOf(
-        stringResource(R.string.aries_name),
-        stringResource(R.string.taurus_name),
-        stringResource(R.string.gemini_name),
-        stringResource(R.string.cancer_name),
-        stringResource(R.string.leo_name),
-        stringResource(R.string.virgo_name),
-        stringResource(R.string.libra_name),
-        stringResource(R.string.scorpio_name),
-        stringResource(R.string.sagittarius_name),
-        stringResource(R.string.capricorn_name),
-        stringResource(R.string.aquarius_name),
-        stringResource(R.string.pisces_name)
-    )
-
+fun ZodiacListPopup(
+    onDismiss: () -> Unit
+) {
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
+                .widthIn(max = 400.dp)
                 .padding(16.dp),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.popup_list_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
+                    text = "Zodiac Signs",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    val zodiacs = listOf(
+                        "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+                        "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+                    )
                     items(zodiacs) { zodiac ->
                         Text(
                             text = zodiac,
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
                         )
-                        Divider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                     }
                 }
-
-                Spacer(Modifier.height(16.dp))
-
                 TextButton(onClick = onDismiss) {
-                    Text(stringResource(R.string.popup_close))
+                    Text("Close")
                 }
             }
         }

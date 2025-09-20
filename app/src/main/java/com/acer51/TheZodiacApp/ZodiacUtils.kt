@@ -1,7 +1,8 @@
 package com.acer51.TheZodiacApp
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource // Keep this for getZodiacDescriptions and getLocalizedZodiacName
+import androidx.compose.ui.res.stringResource
 import java.time.LocalDate
 
 // This function is NO LONGER @Composable and returns a plain String
@@ -52,15 +53,14 @@ fun getZodiacDescriptions(tropicalSignName: String, siderealSignName: String): S
         stringResource(R.string.pisces_name) to stringResource(R.string.pisces_description)
     )
 
-    val tropicalDescription = descriptions[tropicalNameLocalized] ?: "No description for $tropicalNameLocalized"
-    val siderealDescription = descriptions[siderealNameLocalized] ?: "No description for $siderealNameLocalized"
+    val tropicalDescription = descriptions[tropicalNameLocalized] ?: stringResource(R.string.no_description_available) // Using string resource for fallback
+    val siderealDescription = descriptions[siderealNameLocalized] ?: stringResource(R.string.no_description_available) // Using string resource for fallback
 
-    // Using the general explanation strings from your strings.xml
-    val explanationHeader = stringResource(R.string.tropical_vs_sidereal_header) // Make sure this exists
-    val tropicalExplanation = stringResource(R.string.tropical_explanation) // Make sure this exists
-    val siderealExplanation = stringResource(R.string.sidereal_explanation) // Make sure this exists
-    val yourTropicalSignLabel = stringResource(R.string.your_tropical_sign_label) // Make sure this exists
-    val yourSiderealSignLabel = stringResource(R.string.your_sidereal_sign_label) // Make sure this exists
+    val explanationHeader = stringResource(R.string.tropical_vs_sidereal_header)
+    val tropicalExplanation = stringResource(R.string.tropical_explanation)
+    val siderealExplanation = stringResource(R.string.sidereal_explanation)
+    val yourTropicalSignLabel = stringResource(R.string.your_tropical_sign_label)
+    val yourSiderealSignLabel = stringResource(R.string.your_sidereal_sign_label)
 
     return "$explanationHeader\n\n" +
             "$tropicalExplanation\n\n" +
@@ -90,4 +90,3 @@ fun getLocalizedZodiacName(signName: String): String {
         else -> signName // Fallback for "Unknown" or other cases
     }
 }
-    
