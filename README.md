@@ -12,13 +12,14 @@ Around Christmas.
 It's normal. We don't have an icon yet.
 
 ## Contributing
-[Follow this MD.](CONTRIBUTING.md)
+[Follow this MD.](docs/CONTRIBUTING.md)
 
 ## Translating
-[Follow this MD.](TRANSLATE.md)
+[Follow this MD.](docs/TRANSLATE.md)
 
 ## Credits
-[Follow this MD.](CREDITS.md)
+[Follow this MD.](docs/CREDITS.md)
 
 ## To-do list
-[Follow this MD.](TODO.md)
+[Follow this MD.](docs/TODO.md)
+
