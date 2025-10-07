@@ -1,8 +1,6 @@
 # TheZodiacApp
 A free app to find out your Zodiac sign!
 
-# Please use the Flutter version of the app at [this GitHub repository!](https://github.com/acer51-doctom/TheZodiacApp-Flutter)
-
 ## Usage
 
 To use it, you simply need to put in your birthdate and it will print your Tropical Sign and Sidereal sign ("normal" sign)
