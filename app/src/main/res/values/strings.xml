@@ -5,14 +5,16 @@
     <string name="title_app">The Zodiac App</string>
 
     <!-- UI strings for the main screen (ZodiacApp.kt) -->
-    <string name="tropical_sign_result">🌞 Your Tropical Zodiac is: %1$s</string>
-    <string name="sidereal_sign_result">🌌 Your Sidereal Zodiac is: %1$s</string>
-    <string name="current_birthdate">Current selected birthdate: %1$s</string>
-    <string name="button_select_birthdate">Select Birthdate</string>
+    <string name="tropical_sign_result">🌞 Your Tropical (Sun) Sign is: %1$s</string>
+    <string name="sidereal_sign_result">🌌 Your Sidereal (Sun) Sign is: %1$s</string>
+    <string name="rising_sign_result">🌅 Your Rising (Ascendant) Sign is: %1$s</string> <!-- NEW -->
+    <string name="current_birthdate">Birthdate: %1$s</string> <!-- Changed label -->
+    <string name="current_birthtime">Birth Time: %1$s</string> <!-- NEW -->
+    <string name="button_select_birthdate">Select Date</string> <!-- Changed label -->
+    <string name="button_select_birthtime">Select Time</string> <!-- NEW -->
     <string name="button_learn_more">Learn More</string>
     <string name="button_zodiac_list">Show All Zodiac Signs</string>
-    <!-- <string name="button_hide_details">Hide Details</string> --> <!-- Not currently used -->
-    <string name="disclaimer">NOTE: We do not save your data at all.</string>
+    <string name="disclaimer">NOTE: We do not save your data at all. Rising sign calculation is a common approximation.</string> <!-- Updated Disclaimer -->
 
     <!-- Strings for the DatePicker dialog -->
     <string name="dialog_ok">OK</string>
@@ -23,10 +25,13 @@
 
     <!-- These are used by getZodiacDescriptions in ZodiacUtils.kt -->
     <string name="tropical_vs_sidereal_header">Tropical vs. Sidereal Astrology</string>
-    <string name="tropical_explanation">Your tropical sign is based on the position of the sun relative to the seasons on the date of your birth. This is the most common form of astrology in the Western world.</string>
-    <string name="sidereal_explanation">Your sidereal sign is based on the position of the sun relative to the actual constellations in the sky. Because the Earth wobbles on its axis over time, the sidereal zodiac has shifted. This is more common in Vedic astrology. Due to this shift, your sidereal sign is often different from your tropical sign.</string>
+    <string name="tropical_explanation">Your **Tropical Sign** (often called your Sun Sign) is based on the sun\'s position relative to the seasons. This is the most common form of Western astrology.</string>
+    <string name="sidereal_explanation">Your **Sidereal Sign** is based on the sun\'s position relative to the actual constellations in the sky. It\'s more common in Vedic astrology.</string>
+    <string name="what_is_a_rising_sign_header">What is a Rising Sign?</string> <!-- NEW -->
+    <string name="rising_sign_explanation">Your Rising Sign (or Ascendant) represents the mask you present to the world and your initial reactions. It\'s the zodiac sign that was on the eastern horizon at the exact time of your birth.</string> <!-- NEW -->
     <string name="your_tropical_sign_label">Your Tropical Sign</string>
     <string name="your_sidereal_sign_label">Your Sidereal Sign</string>
+    <string name="your_rising_sign_label">Your Rising Sign</string> <!-- NEW -->
     <string name="no_description_available">No specific description available for this sign.</string>
 
     <!-- String for ZodiacInfoPopup, can be used to prompt to see all signs -->

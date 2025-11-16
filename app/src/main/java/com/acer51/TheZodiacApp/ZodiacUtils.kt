@@ -1,92 +1,137 @@
 package com.acer51.TheZodiacApp
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import java.time.LocalDate
+import java.time.LocalTime
+import java.time.MonthDay
 
-// This function is NO LONGER @Composable and returns a plain String
+// (Keep your existing getTropicalZodiacNonComposable, getSiderealZodiacNonComposable, and getLocalizedZodiacName functions here...)
+// I'll re-add them here for completeness.
+
 fun getTropicalZodiacNonComposable(date: LocalDate): String {
-    val day = date.dayOfMonth
-    val month = date.monthValue
-    return when (month) {
-        1 -> if (day < 20) "Capricorn" else "Aquarius"
-        2 -> if (day < 19) "Aquarius" else "Pisces"
-        3 -> if (day < 21) "Pisces" else "Aries"
-        4 -> if (day < 20) "Aries" else "Taurus"
-        5 -> if (day < 21) "Taurus" else "Gemini"
-        6 -> if (day < 21) "Gemini" else "Cancer"
-        7 -> if (day < 23) "Cancer" else "Leo"
-        8 -> if (day < 23) "Leo" else "Virgo"
-        9 -> if (day < 23) "Virgo" else "Libra"
-        10 -> if (day < 23) "Libra" else "Scorpio"
-        11 -> if (day < 22) "Scorpio" else "Sagittarius"
-        12 -> if (day < 22) "Sagittarius" else "Capricorn"
-        else -> "Unknown" // Default case
+    val monthDay = MonthDay.from(date)
+    return when {
+        monthDay.isAfter(MonthDay.of(3, 20)) && monthDay.isBefore(MonthDay.of(4, 20)) -> "Aries"
+        monthDay.isAfter(MonthDay.of(4, 19)) && monthDay.isBefore(MonthDay.of(5, 21)) -> "Taurus"
+        monthDay.isAfter(MonthDay.of(5, 20)) && monthDay.isBefore(MonthDay.of(6, 21)) -> "Gemini"
+        monthDay.isAfter(MonthDay.of(6, 20)) && monthDay.isBefore(MonthDay.of(7, 23)) -> "Cancer"
+        monthDay.isAfter(MonthDay.of(7, 22)) && monthDay.isBefore(MonthDay.of(8, 23)) -> "Leo"
+        monthDay.isAfter(MonthDay.of(8, 22)) && monthDay.isBefore(MonthDay.of(9, 23)) -> "Virgo"
+        monthDay.isAfter(MonthDay.of(9, 22)) && monthDay.isBefore(MonthDay.of(10, 23)) -> "Libra"
+        monthDay.isAfter(MonthDay.of(10, 22)) && monthDay.isBefore(MonthDay.of(11, 22)) -> "Scorpio"
+        monthDay.isAfter(MonthDay.of(11, 21)) && monthDay.isBefore(MonthDay.of(12, 22)) -> "Sagittarius"
+        monthDay.isAfter(MonthDay.of(12, 21)) || monthDay.isBefore(MonthDay.of(1, 20)) -> "Capricorn"
+        monthDay.isAfter(MonthDay.of(1, 19)) && monthDay.isBefore(MonthDay.of(2, 19)) -> "Aquarius"
+        monthDay.isAfter(MonthDay.of(2, 18)) && monthDay.isBefore(MonthDay.of(3, 21)) -> "Pisces"
+        else -> "Unknown"
     }
 }
 
-// This function is NO LONGER @Composable and returns a plain String
 fun getSiderealZodiacNonComposable(date: LocalDate): String {
-    return getTropicalZodiacNonComposable(date.minusDays(24)) // Approximate sidereal shift
+    // Sidereal is roughly 24 days behind Tropical. We subtract 24 days.
+    val siderealDate = date.minusDays(24)
+    return getTropicalZodiacNonComposable(siderealDate)
 }
 
-// This function REMAINS @Composable because it uses stringResource directly
-// and is intended to be called from a Composable context to build a display string.
-@Composable
-fun getZodiacDescriptions(tropicalSignName: String, siderealSignName: String): String {
-    val tropicalNameLocalized = getLocalizedZodiacName(tropicalSignName)
-    val siderealNameLocalized = getLocalizedZodiacName(siderealSignName)
-
-    val descriptions = mapOf(
-        stringResource(R.string.aries_name) to stringResource(R.string.aries_description),
-        stringResource(R.string.taurus_name) to stringResource(R.string.taurus_description),
-        stringResource(R.string.gemini_name) to stringResource(R.string.gemini_description),
-        stringResource(R.string.cancer_name) to stringResource(R.string.cancer_description),
-        stringResource(R.string.leo_name) to stringResource(R.string.leo_description),
-        stringResource(R.string.virgo_name) to stringResource(R.string.virgo_description),
-        stringResource(R.string.libra_name) to stringResource(R.string.libra_description),
-        stringResource(R.string.scorpio_name) to stringResource(R.string.scorpio_description),
-        stringResource(R.string.sagittarius_name) to stringResource(R.string.sagittarius_description),
-        stringResource(R.string.capricorn_name) to stringResource(R.string.capricorn_description),
-        stringResource(R.string.aquarius_name) to stringResource(R.string.aquarius_description),
-        stringResource(R.string.pisces_name) to stringResource(R.string.pisces_description)
+/**
+ * NEW FUNCTION
+ * Calculates the Rising Sign (Ascendant) based on birth time and sun sign.
+ * This is a common simplification that assumes sunrise is at 6 AM.
+ * The Rising Sign changes approximately every 2 hours.
+ * At sunrise (6 AM), the Rising Sign is the same as the Sun Sign.
+ */
+fun getRisingSign(birthTime: LocalTime, sunSign: String): String {
+    val zodiacOrder = listOf(
+        "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+        "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
     )
 
-    val tropicalDescription = descriptions[tropicalNameLocalized] ?: stringResource(R.string.no_description_available) // Using string resource for fallback
-    val siderealDescription = descriptions[siderealNameLocalized] ?: stringResource(R.string.no_description_available) // Using string resource for fallback
+    val sunSignIndex = zodiacOrder.indexOf(sunSign)
+    if (sunSignIndex == -1) return "Unknown"
 
-    val explanationHeader = stringResource(R.string.tropical_vs_sidereal_header)
-    val tropicalExplanation = stringResource(R.string.tropical_explanation)
-    val siderealExplanation = stringResource(R.string.sidereal_explanation)
-    val yourTropicalSignLabel = stringResource(R.string.your_tropical_sign_label)
-    val yourSiderealSignLabel = stringResource(R.string.your_sidereal_sign_label)
+    // Calculate how many 2-hour blocks have passed since 6 AM.
+    // We normalize the hour to handle times past midnight (e.g., 2 AM is 20 hours after 6 AM yesterday).
+    val hoursSince6AM = (birthTime.hour - 6 + 24) % 24
+    val signShifts = hoursSince6AM / 2
 
-    return "$explanationHeader\n\n" +
-            "$tropicalExplanation\n\n" +
-            "$siderealExplanation\n\n" +
-            "---\n\n" +
-            "**$yourTropicalSignLabel ($tropicalNameLocalized):**\n$tropicalDescription\n\n" +
-            "**$yourSiderealSignLabel ($siderealNameLocalized):**\n$siderealDescription"
+    // The rising sign index is the sun sign index plus the number of shifts, wrapped around 12.
+    val risingSignIndex = (sunSignIndex + signShifts) % 12
+
+    return zodiacOrder[risingSignIndex]
 }
 
-// This helper is for localizing the plain string names (Aries, Taurus, etc.)
-// that getTropicalZodiacNonComposable returns.
+
 @Composable
-fun getLocalizedZodiacName(signName: String): String {
-    return when (signName) {
-        "Aries" -> stringResource(R.string.aries_name)
-        "Taurus" -> stringResource(R.string.taurus_name)
-        "Gemini" -> stringResource(R.string.gemini_name)
-        "Cancer" -> stringResource(R.string.cancer_name)
-        "Leo" -> stringResource(R.string.leo_name)
-        "Virgo" -> stringResource(R.string.virgo_name)
-        "Libra" -> stringResource(R.string.libra_name)
-        "Scorpio" -> stringResource(R.string.scorpio_name)
-        "Sagittarius" -> stringResource(R.string.sagittarius_name)
-        "Capricorn" -> stringResource(R.string.capricorn_name)
-        "Aquarius" -> stringResource(R.string.aquarius_name)
-        "Pisces" -> stringResource(R.string.pisces_name)
-        else -> signName // Fallback for "Unknown" or other cases
+fun getLocalizedZodiacName(signKey: String): String {
+    val resourceId = when (signKey) {
+        "Aries" -> R.string.aries_name
+        "Taurus" -> R.string.taurus_name
+        "Gemini" -> R.string.gemini_name
+        "Cancer" -> R.string.cancer_name
+        "Leo" -> R.string.leo_name
+        "Virgo" -> R.string.virgo_name
+        "Libra" -> R.string.libra_name
+        "Scorpio" -> R.string.scorpio_name
+        "Sagittarius" -> R.string.sagittarius_name
+        "Capricorn" -> R.string.capricorn_name
+        "Aquarius" -> R.string.aquarius_name
+        "Pisces" -> R.string.pisces_name
+        else -> R.string.unknown_sign_name
     }
+    return stringResource(id = resourceId)
+}
+
+fun getZodiacDescription(signKey: String): Int {
+    return when (signKey) {
+        "Aries" -> R.string.aries_description
+        "Taurus" -> R.string.taurus_description
+        "Gemini" -> R.string.gemini_description
+        "Cancer" -> R.string.cancer_description
+        "Leo" -> R.string.leo_description
+        "Virgo" -> R.string.virgo_description
+        "Libra" -> R.string.libra_description
+        "Scorpio" -> R.string.scorpio_description
+        "Sagittarius" -> R.string.sagittarius_description
+        "Capricorn" -> R.string.capricorn_description
+        "Aquarius" -> R.string.aquarius_description
+        "Pisces" -> R.string.pisces_description
+        else -> R.string.no_description_available
+    }
+}
+
+/**
+ * UPDATED FUNCTION
+ * Generates the detailed description text for the popup, now including the Rising Sign.
+ */
+@Composable
+fun getZodiacDescriptions(tropicalSign: String, siderealSign: String, risingSign: String): String {
+    val tropicalDesc = stringResource(getZodiacDescription(tropicalSign))
+    val siderealDesc = stringResource(getZodiacDescription(siderealSign))
+    val risingDesc = if (risingSign.isNotEmpty()) stringResource(getZodiacDescription(risingSign)) else ""
+
+    val sb = StringBuilder()
+
+    // Tropical vs Sidereal explanation
+    sb.append("**${stringResource(R.string.tropical_vs_sidereal_header)}**\n")
+    sb.append(stringResource(R.string.tropical_explanation)).append("\n\n")
+    sb.append(stringResource(R.string.sidereal_explanation)).append("\n\n")
+
+    // Your calculated signs
+    sb.append("**${stringResource(R.string.your_tropical_sign_label)} (${getLocalizedZodiacName(tropicalSign)})**\n")
+    sb.append(tropicalDesc).append("\n\n")
+
+    sb.append("**${stringResource(R.string.your_sidereal_sign_label)} (${getLocalizedZodiacName(siderealSign)})**\n")
+    sb.append(siderealDesc).append("\n\n")
+
+    // Add Rising Sign section if it has been calculated
+    if (risingSign.isNotEmpty()) {
+        sb.append("**${stringResource(R.string.what_is_a_rising_sign_header)}**\n")
+        sb.append(stringResource(R.string.rising_sign_explanation)).append("\n\n")
+
+        sb.append("**${stringResource(R.string.your_rising_sign_label)} (${getLocalizedZodiacName(risingSign)})**\n")
+        sb.append(risingDesc).append("\n")
+    }
+
+    return sb.toString()
 }

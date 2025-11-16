@@ -7,8 +7,11 @@
     <!-- UI strings for the main screen (ZodiaqueApp.kt) -->
     <string name="tropical_sign_result">🌞 Ton Zodiaque Tropical est : %1$s</string>
     <string name="sidereal_sign_result">🌌 Ton Zodiaque Sidéral est : %1$s</string>
+    <string name="rising_sign_result">🌅 Ton signe ascendant est : %1$s</string>
     <string name="current_birthdate">La date sélectionnée est : %1$s</string>
+    <string name="current_birthtime">Heure de naissance : %1$s</string>
     <string name="button_select_birthdate">Sélectionner ma date de naissance</string>
+    <string name="button_select_birthtime">Sélectionne l\'heure</string>
     <string name="button_learn_more">En savoir plus</string>
     <string name="button_zodiac_list">Tous les signes du Zodiaque</string>
     <!-- <string name="button_hide_details">Cacher les détails</string> --> <!-- Not currently used -->
@@ -25,8 +28,10 @@
     <string name="tropical_vs_sidereal_header">L\'astrologie Sidérale vs. Tropicale</string>
     <string name="tropical_explanation">Votre signe tropical est basé sur la position du soleil par rapport aux saisons à la date de votre naissance. C\'est la forme d\'astrologie la plus courante dans le monde occidental.</string> <!-- From your original popup_info_p1 -->
     <string name="sidereal_explanation">Votre signe sidéral est basé sur la position du soleil par rapport aux constellations réelles dans le ciel. Parce que la Terre oscille sur son axe avec le temps, le zodiaque sidéral s\'est décalé. Ceci est plus courant en astrologie védique. En raison de ce décalage, votre signe sidéral est souvent différent de votre signe tropical.</string> <!-- Based on your original popup_info_p2, slightly rephrased for context -->
+    <string name="rising_sign_explanation">Votre signe ascendant  représente le masque que vous présentez au monde et vos réactions initiales. C\'est le signe du zodiaque qui se trouvait à l\'horizon est au moment précis de votre naissance.</string>
     <string name="your_tropical_sign_label">Ton signe Tropical</string>
     <string name="your_sidereal_sign_label">Ton signe Sidéral</string>
+    <string name="your_rising_sign_label">Ton signe Ascendant</string>
     <string name="no_description_available">Aucune description disponible pour celui-ci.</string>
 
     <!-- String for ZodiaqueInfoPopup, can be used to prompt to see all signs -->
@@ -65,4 +70,5 @@
     <string name="capricorn_description">Capricorne : discipliné, ambitieux, responsable.</string>
     <string name="aquarius_description">Verseau : innovateur, humanitaire, libre penseur.</string>
     <string name="pisces_description">Poissons : compatissant, artistique, empathique.</string>
+    <string name="what_is_a_rising_sign_header">Quel est un Ascendant astrologique ?</string>
 </resources>
