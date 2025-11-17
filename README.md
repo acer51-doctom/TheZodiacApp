@@ -1,6 +1,9 @@
 # TheZodiacApp
 A free app to find out your Zodiac sign!
 
+> [!IMPORTANT]
+> This entire project is under the GPLv3 license. Credit is required when making a fork or copy <br> of this project. <br> Copyright © Acer_51
+
 ## Usage
 
 To use it, you simply need to put in your birthdate and it will print your Tropical Sign and Sidereal sign ("normal" sign)
@@ -22,4 +25,7 @@ It's normal. We don't have an icon yet.
 
 ## To-do list
 [Follow this MD.](docs/TODO.md)
+
+## Build it yourself
+[Follow this MD.](docs/BUILD.md)
 
