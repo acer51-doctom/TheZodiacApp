@@ -20,6 +20,11 @@ jobs:
           distribution: 'temurin'
           cache: gradle # Caches Gradle files for faster builds
 
+      - name: Install Build Tools 29.0.3
+        run: |
+          # Use sdkmanager to install the specific missing version
+          echo "y" | $ANDROID_SDK_ROOT/tools/bin/sdkmanager "build-tools;29.0.3
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
