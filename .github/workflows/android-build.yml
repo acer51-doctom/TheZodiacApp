@@ -1,0 +1,47 @@
+name: Build & Sign Universal APK
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch: # Allows manual trigger from the GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout Code
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle # Caches Gradle files for faster builds
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 1. Build the Release APK
+      # This generates the single, multi-architecture (universal) 'app-release-unsigned.apk'
+      - name: Build Universal Release APK
+        run: ./gradlew assembleRelease
+
+      # 2. Sign the APK securely using your GitHub Secrets
+      - name: Sign Release APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app # Gives a unique ID to reference the output file
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      # 3. Upload the Final Signed APK as an artifact
+      - name: Upload Signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: zodiac-app-universal-release
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}

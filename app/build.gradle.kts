@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         vectorDrawables.useSupportLibrary = true
+
+        // This file is already configured for a single, Universal APK (all architectures)
+        // because you have NOT included any 'splits' or 'ndk { abiFilters }' blocks.
     }
 
     buildFeatures {
@@ -25,7 +28,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    
+
+    // ⚠️ The following block was removed because it uses a deprecated and brittle method
+    // for renaming APKs. For CI/CD (like GitHub Actions), it's best to let Gradle use
+    // its default naming convention (e.g., app-release-unsigned.apk) and handle the
+    // renaming when you upload the artifact in the workflow.
+    /*
     applicationVariants.all {
         outputs.all {
             val buildTypeName = name // debug or release
@@ -33,28 +41,24 @@ android {
                 "TheZodiacApp-${buildTypeName}.apk"
         }
     }
+    */
 }
 
-// Line 39 to 44:
-//      Basic dependencies for the app
-// Line 45 and 46:
-//      Debug implementation
-// Line 47 and 48:
-//      Test implementations
-// Line 49 to 51:
-//      Android test
 dependencies {
+    // Core and Compose dependencies
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.compose.ui:ui:1.5.3")
+    implementation("androidx.compose.ui:ui:1.5.4") // Adjusted to 1.5.4 for consistency
     implementation("androidx.compose.material3:material3:1.2.0")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.5.3")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.4") // Adjusted to 1.5.4 for consistency
     implementation("com.google.android.material:material:1.12.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.5.3")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4") // Add a version here too
+
+    // Testing and Debug dependencies
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.4") // Adjusted to 1.5.4 for consistency
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.22")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4") // Corrected line
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
 }
