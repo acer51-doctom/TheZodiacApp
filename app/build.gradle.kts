@@ -10,10 +10,15 @@ android {
 
     defaultConfig {
         applicationId = "com.acer51.TheZodiacApp"
+
+        // This line sets the minimum supported Android version.
+        // API 26 corresponds to Android 8.0 (Oreo).
+        // This configuration already supports Android 8.0 and newer.
         minSdk = 26
+
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.4.0"
 
         vectorDrawables.useSupportLibrary = true
 
