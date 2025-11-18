@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.google.material)
     implementation(libs.androidx.navigation.compose)
+
+    // ADDED: Include the icon libraries which are needed for the Menu icon
     implementation(libs.androidx.compose.icons.core)
     implementation(libs.androidx.compose.icons.extended)
 
