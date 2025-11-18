@@ -15,7 +15,7 @@
     <string name="button_learn_more">En savoir plus</string>
     <string name="button_zodiac_list">Tous les signes du Zodiaque</string>
     <!-- <string name="button_hide_details">Cacher les détails</string> --> <!-- Not currently used -->
-    <string name="disclaimer">NOTE : Nous ne sauvegardons pas vos données.</string> <!-- Adjusted slightly from your original -->
+    <string name="disclaimer">NOTE : Nous ne sauvegardons pas vos données. \\nLe calculateur d\'ascendant est une simple approximation.</string> <!-- Adjusted slightly from your original -->
 
     <!-- Strings for the DatePicker dialog -->
     <string name="dialog_ok">OK</string>
@@ -71,4 +71,9 @@
     <string name="aquarius_description">Verseau : innovateur, humanitaire, libre penseur.</string>
     <string name="pisces_description">Poissons : compatissant, artistique, empathique.</string>
     <string name="what_is_a_rising_sign_header">Quel est un Ascendant astrologique ?</string>
+    <string name="drawer_zodiac_calculator">Calculateur du Zodiaque</string>
+    <string name="drawer_settings">Paramètres</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_placeholder_text">Les paramètres de l\'application vont être intégrés dans une future mise à jour.</string>
+    <string name="shell_menu_content_description">Menu</string>
 </resources>

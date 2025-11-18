@@ -10,7 +10,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TheZodiacAppTheme {
-                ZodiacApp()
+                // MODIFIED: Call the new shell composable which contains all navigation logic.
+                // This replaces the direct call to ZodiacApp().
+                TheZodiacAppShell()
             }
         }
     }

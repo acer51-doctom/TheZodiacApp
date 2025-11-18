@@ -14,7 +14,7 @@
     <string name="button_select_birthtime">Select Time</string> <!-- NEW -->
     <string name="button_learn_more">Learn More</string>
     <string name="button_zodiac_list">Show All Zodiac Signs</string>
-    <string name="disclaimer">NOTE: We do not save your data at all. Rising sign calculation is a common approximation.</string> <!-- Updated Disclaimer -->
+    <string name="disclaimer">NOTE: We do not save your data at all.  \\nRising sign calculation is a common approximation.</string> <!-- Updated Disclaimer -->
 
     <!-- Strings for the DatePicker dialog -->
     <string name="dialog_ok">OK</string>
@@ -70,4 +70,16 @@
     <string name="capricorn_description">Capricorn: disciplined, ambitious, responsible.</string>
     <string name="aquarius_description">Aquarius: innovative, humanitarian, free-thinking.</string>
     <string name="pisces_description">Pisces: compassionate, artistic, empathetic.</string>
+    <!-- NEW STRINGS FOR NAVIGATION AND SETTINGS -->
+
+    <!-- Strings for the Navigation Drawer (AppDrawer.kt) -->
+    <string name="drawer_zodiac_calculator">Zodiac Calculator</string>
+    <string name="drawer_settings">Settings</string>
+
+    <!-- Strings for the Settings Screen (SettingsScreen.kt) -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_placeholder_text">App settings will be configured here in a future update.</string>
+
+    <!-- Strings for the App Shell (TheZodiacAppShell.kt) -->
+    <string name="shell_menu_content_description">Menu</string>
 </resources>

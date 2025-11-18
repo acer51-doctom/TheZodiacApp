@@ -25,137 +25,147 @@ import com.acer51.TheZodiacApp.ui.theme.TheZodiacAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ZodiacApp() {
+// MODIFIED: Function signature now accepts PaddingValues from the parent Scaffold.
+fun ZodiacApp(paddingValues: PaddingValues) {
     TheZodiacAppTheme {
         var date by remember { mutableStateOf<LocalDate?>(null) }
-        var time by remember { mutableStateOf<LocalTime?>(null) } // State for birth time
+        var time by remember { mutableStateOf<LocalTime?>(null) }
         var tropicalSignName by remember { mutableStateOf("") }
         var siderealSignName by remember { mutableStateOf("") }
-        var risingSignName by remember { mutableStateOf("") } // State for rising sign
+        var risingSignName by remember { mutableStateOf("") }
 
+        // Corrected line 37
         var showZodiacInfoPopup by remember { mutableStateOf(false) }
         var showZodiacListPopup by remember { mutableStateOf(false) }
 
         var showDatePicker by remember { mutableStateOf(false) }
-        var showTimePicker by remember { mutableStateOf(false) } // State to control time picker
+        var showTimePicker by remember { mutableStateOf(false) }
         val datePickerState = rememberDatePickerState()
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(R.string.app_name)) },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        // REMOVED: The Scaffold and TopAppBar that were previously here are now managed by TheZodiacAppShell.
+
+        // The Column is now the top-level layout element in this composable.
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                // MODIFIED: Apply the padding passed from the shell to avoid content being drawn under the top bar.
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(R.string.title_app),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            // Section to display results (no changes here)
+            if (tropicalSignName.isNotEmpty()) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = stringResource(R.string.tropical_sign_result, getLocalizedZodiacName(tropicalSignName)),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyLarge
                     )
-                )
-            }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.title_app),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-                Spacer(Modifier.height(32.dp))
-
-                // Section to display results
-                if (tropicalSignName.isNotEmpty()) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = stringResource(R.string.tropical_sign_result, getLocalizedZodiacName(tropicalSignName)),
-                            color = MaterialTheme.colorScheme.onBackground,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.sidereal_sign_result, getLocalizedZodiacName(siderealSignName)),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    if (risingSignName.isNotEmpty()) {
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.sidereal_sign_result, getLocalizedZodiacName(siderealSignName)),
+                            text = stringResource(R.string.rising_sign_result, getLocalizedZodiacName(risingSignName)),
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        // Display Rising Sign only if it's calculated
-                        if (risingSignName.isNotEmpty()) {
-                            Spacer(Modifier.height(8.dp))
-                            Text(
-                                text = stringResource(R.string.rising_sign_result, getLocalizedZodiacName(risingSignName)),
-                                color = MaterialTheme.colorScheme.onBackground,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
-                    }
-                    Spacer(Modifier.height(16.dp))
-                }
-
-                // Section to display selected date and time
-                date?.let {
-                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                    Text(
-                        text = stringResource(R.string.current_birthdate, it.format(formatter)),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-                time?.let {
-                    val formatter = DateTimeFormatter.ofPattern("HH:mm")
-                    Text(
-                        text = stringResource(R.string.current_birthtime, it.format(formatter)),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-                if (date != null || time != null) {
-                    Spacer(Modifier.height(16.dp))
-                }
-
-                // Buttons to select Date and Time
-                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Button(onClick = { showDatePicker = true }) {
-                        Text(stringResource(R.string.button_select_birthdate))
-                    }
-                    // Only show time picker if a date has been selected
-                    if (date != null) {
-                        Button(onClick = { showTimePicker = true }) {
-                            Text(stringResource(R.string.button_select_birthtime))
-                        }
                     }
                 }
-
                 Spacer(Modifier.height(16.dp))
+            }
 
-                // Buttons for "Learn More" and "Zodiac List"
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (tropicalSignName.isNotEmpty()) {
-                        Button(onClick = { showZodiacInfoPopup = true }) {
-                            Text(stringResource(R.string.button_learn_more))
-                        }
-                    }
-                    Button(onClick = { showZodiacListPopup = true }) {
-                        Text(stringResource(R.string.button_zodiac_list))
-                    }
-                }
-
-                Spacer(Modifier.height(32.dp))
-
+            // Section to display selected date and time (no changes here)
+            date?.let {
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
                 Text(
-                    text = stringResource(R.string.disclaimer),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    textAlign = TextAlign.Center
+                    text = stringResource(R.string.current_birthdate, it.format(formatter)),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
+            time?.let {
+                val formatter = DateTimeFormatter.ofPattern("HH:mm")
+                Text(
+                    text = stringResource(R.string.current_birthtime, it.format(formatter)),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+            if (date != null || time != null) {
+                Spacer(Modifier.height(16.dp))
+            }
+
+            // Buttons to select Date and Time (no changes here)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    onClick = { showDatePicker = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.button_select_birthdate))
+                }
+                if (date != null) {
+                    Button(
+                        onClick = { showTimePicker = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.button_select_birthtime))
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Buttons for "Learn More" and "Zodiac List" (no changes here)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (tropicalSignName.isNotEmpty()) {
+                    Button(
+                        onClick = { showZodiacInfoPopup = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.button_learn_more))
+                    }
+                }
+                Button(
+                    onClick = { showZodiacListPopup = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.button_zodiac_list))
+                }
+            }
+
+            Spacer(Modifier.height(32.dp))
+
+            Text(
+                text = stringResource(R.string.disclaimer),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
+            )
         }
 
+        // --- Dialog and Popup logic remains unchanged ---
         if (showZodiacInfoPopup) {
             val detailedDescription = getZodiacDescriptions(tropicalSignName, siderealSignName, risingSignName)
             ZodiacInfoPopup(
@@ -177,10 +187,8 @@ fun ZodiacApp() {
                             datePickerState.selectedDateMillis?.let { millis ->
                                 val selectedDate = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
                                 date = selectedDate
-                                // Calculate Sun signs
                                 tropicalSignName = getTropicalZodiacNonComposable(selectedDate)
                                 siderealSignName = getSiderealZodiacNonComposable(selectedDate)
-                                // If time is already set, recalculate rising sign with new sun sign
                                 time?.let {
                                     risingSignName = getRisingSign(it, tropicalSignName)
                                 }
@@ -199,13 +207,11 @@ fun ZodiacApp() {
             }
         }
 
-        // Call the TimePickerDialog
         if (showTimePicker) {
             TimePickerDialog(
                 onDismissRequest = { showTimePicker = false },
                 onTimeSelected = { selectedTime ->
                     time = selectedTime
-                    // Calculate rising sign as soon as time is selected
                     risingSignName = getRisingSign(selectedTime, tropicalSignName)
                     showTimePicker = false
                 }
