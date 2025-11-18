@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.google.material)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.icons.core)
+    implementation(libs.androidx.compose.icons.extended)
 
     // Testing and Debug dependencies
     debugImplementation(libs.androidx.compose.ui.tooling)
