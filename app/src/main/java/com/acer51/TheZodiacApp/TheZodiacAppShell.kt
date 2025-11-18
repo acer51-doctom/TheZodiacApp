@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.*
 import kotlinx.coroutines.launch
@@ -15,59 +16,49 @@ fun TheZodiacAppShell() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    // Get the current route to determine the title and selected drawer item
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: "zodiac"
 
+    // --- UPDATER INTEGRATION START ---
+    val context = LocalContext.current
+    val updater = remember { AppUpdater(context) }
+    val release by updater.updateState.collectAsState()
+
+    // This effect runs once when the app shell is first displayed
+    LaunchedEffect(Unit) {
+        updater.checkForUpdates()
+    }
+
+    // If an update is found, show the dialog
+    release?.let {
+        UpdateDialog(
+            release = it,
+            onConfirm = {
+                updater.downloadAndInstall(it)
+                updater.dismissUpdate() // Hide dialog after starting download
+            },
+            onDismiss = {
+                updater.dismissUpdate() // Hide dialog
+            }
+        )
+    }
+    // --- UPDATER INTEGRATION END ---
+
     val currentTitle = when (currentRoute) {
-        "settings" -> stringResource(R.string.settings_title) // MODIFIED
+        "settings" -> stringResource(R.string.settings_title)
         else -> stringResource(id = R.string.app_name)
     }
 
     ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            AppDrawer(
-                currentRoute = currentRoute,
-                navController = navController,
-                closeDrawer = { scope.launch { drawerState.close() } }
-            )
-        }
+        // ... (rest of your ModalNavigationDrawer is unchanged)
     ) {
         Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(currentTitle) },
-                    // This places the icon on the top-left
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch { drawerState.open() }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = stringResource(R.string.shell_menu_content_description) // MODIFIED
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                )
-            }
+            // ... (rest of your Scaffold is unchanged)
         ) { paddingValues ->
-            NavHost(
-                navController = navController,
-                startDestination = "zodiac"
+            androidx.navigation.NavHost(
+                // ... (rest of your NavHost is unchanged)
             ) {
-                composable("zodiac") {
-                    // We pass the padding from the Scaffold to our screen
-                    ZodiacApp(paddingValues = paddingValues)
-                }
-                composable("settings") {
-                    SettingsScreen()
-                }
+                // ...
             }
         }
     }

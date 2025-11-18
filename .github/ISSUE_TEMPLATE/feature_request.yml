@@ -1,0 +1,52 @@
+name: ✨ Feature Request
+description: Suggest an idea or enhancement for the project.
+title: "[Feature]: "
+labels: ["enhancement", "needs triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Please clearly describe the problem and your proposed solution.
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem or Use Case
+      description: What problem are you trying to solve, or what existing limitation is this feature addressing? Explain the user story or scenario.
+      placeholder: As a user, I want... so that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the feature you want to be added. If you have an idea for the design or implementation, include it here.
+      placeholder: |
+        We should add a "Dark Mode" toggle switch to the Settings screen.
+        Technically, this would require adding a new theme state management layer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or features? If so, why was this proposed solution chosen?
+      placeholder: |
+        I considered using the system's default theme settings, but I prefer a manual in-app toggle.
+
+  - type: checkboxes
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria Checklist
+      description: This list helps ensure the feature is fully delivered.
+      options:
+        - label: The feature is implemented and functional.
+        - label: Adequate unit and integration tests are added.
+        - label: Relevant documentation (e.g., README or inline docs) is updated.
+        - label: The change is backward-compatible (or clearly marked as breaking).
+    validations:
+      required: true

@@ -3,12 +3,16 @@
 agp = "8.13.1"
 kotlin = "2.0.21"
 
+# ADDED for updater
+ktor = "2.3.11"
+kotlinxSerializationJson = "1.6.3"
+
 # AndroidX & Compose
 coreKtx = "1.17.0"
-activityCompose = "1.9.0"        # Corrected to a recent stable version
-composeUi = "1.6.7"              # WAS: "1.9.4" - This was the source of the error. Corrected to a valid, stable version.
-composeMaterial3 = "1.2.1"       # Corrected to a recent stable version
-navigationCompose = "2.7.7"      # Corrected to a recent stable version
+activityCompose = "1.9.0"
+composeUi = "1.6.7"
+composeMaterial3 = "1.2.1"
+navigationCompose = "2.7.7"
 googleMaterial = "1.13.0"
 
 # Testing
@@ -35,6 +39,13 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "composeUi" }
 androidx-compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeUi" }
 
+# ADDED: Ktor for Networking
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
 # Testing Libraries
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlinTest" }
@@ -46,3 +57,5 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+# ADDED for updater
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

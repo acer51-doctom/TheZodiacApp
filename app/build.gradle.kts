@@ -1,8 +1,9 @@
 plugins {
-    // MODIFIED: Use aliases from the version catalog
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    // ADDED: Apply the serialization plugin for the updater
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -25,13 +26,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    // The commented-out 'applicationVariants' block can remain as is
 }
 
 dependencies {
-    // MODIFIED: All dependencies now reference the version catalog
-
     // Core and Compose dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
@@ -40,10 +37,15 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.google.material)
     implementation(libs.androidx.navigation.compose)
-
-    // ADDED: Include the icon libraries which are needed for the Menu icon
     implementation(libs.androidx.compose.icons.core)
     implementation(libs.androidx.compose.icons.extended)
+
+    // ADDED: Ktor for networking and JSON parsing for the updater
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.kotlinx.serialization.json)
 
     // Testing and Debug dependencies
     debugImplementation(libs.androidx.compose.ui.tooling)

@@ -1,0 +1,22 @@
+name: Pull Request Templates
+description: Choose the template that best fits your submission.
+title: "[TYPE] Concise PR description"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! Please select the appropriate template for your change.
+
+  - type: dropdown
+    id: template_type
+    attributes:
+      label: Template Type
+      description: What kind of PR are you creating?
+      options:
+        - "Contribution (contributing.md)"
+        - "Feature (feature.md)"
+        - "Documentation Update (doc_update.md)"
+        - "Bug Fix (bug_fix.md)"
+        - "Translation (translations.md)"
+    validations:
+      required: true
