@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun UpdateDialog(
@@ -14,16 +15,24 @@ fun UpdateDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Update Available!") },
-        text = { Text(text = "A new version (${release.name}) is available. Do you want to download it?\n\nRelease Notes:\n${release.body}") },
+        title = { Text(text = stringResource(R.string.updater_dialog_title)) },
+        text = {
+            Text(
+                text = stringResource(
+                    R.string.updater_dialog_text,
+                    release.name,
+                    release.body.orEmpty() // Use orEmpty() to handle null release notes
+                )
+            )
+        },
         confirmButton = {
             Button(onClick = onConfirm) {
-                Text("Download")
+                Text(stringResource(R.string.updater_dialog_confirm_button))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Later")
+                Text(stringResource(R.string.updater_dialog_dismiss_button))
             }
         }
     )

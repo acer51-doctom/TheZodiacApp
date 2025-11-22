@@ -74,6 +74,13 @@
     <string name="drawer_zodiac_calculator">Calculateur du Zodiaque</string>
     <string name="drawer_settings">Paramètres</string>
     <string name="settings_title">Paramètres</string>
-    <string name="settings_placeholder_text">Les paramètres de l\'application vont être intégrés dans une future mise à jour.</string>
+    <string name="settings_language_system_default">La</string>
     <string name="shell_menu_content_description">Menu</string>
+    <string name="updater_dialog_title">Nouvelle mise à jour disponible !</string>
+    <string name="updater_dialog_text">"Une nouvelle version (%1$s) est disponible. Voulez vous la télécharger ? Notes de mise à jour : "</string>
+    <string name="updater_dialog_confirm_button">Télécharger</string>
+    <string name="updater_dialog_dismiss_button">Plus tard</string>
+    <string name="updater_toast_no_apk">Aucun fichier APK trouvé dans la mise à jour.</string>
+    <string name="updater_notification_description">Téléchargement de la mise à jour...</string>
+    <string name="settings_language_label">Langue</string>
 </resources>

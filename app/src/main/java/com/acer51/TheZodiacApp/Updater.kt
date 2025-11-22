@@ -6,12 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.net.http.HttpResponseCache
 import android.os.Build
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.acer51.TheZodiacApp.BuildConfig
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -40,16 +40,15 @@ data class Asset(
 )
 
 class AppUpdater(private val context: Context) {
-    // IMPORTANT: Replace with your GitHub username and repository name
+    // These are configuration constants, not user-facing text, so they remain hardcoded.
     private val GITHUB_OWNER = "Acer-51"
     private val GITHUB_REPO = "TheZodiacApp"
 
     private val _updateState = MutableStateFlow<GitHubRelease?>(null)
     val updateState = _updateState.asStateFlow()
 
-    private val httpClient =
-        com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient(CIO) {
-            HttpResponseCache.install(ContentNegotiation) {
+    private val httpClient = HttpClient(CIO) {
+        install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true; isLenient = true })
         }
     }
@@ -58,7 +57,7 @@ class AppUpdater(private val context: Context) {
         try {
             val latestRelease: GitHubRelease = httpClient.get("https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/releases/latest").body()
             val currentVersion = BuildConfig.VERSION_NAME
-            // Simple version comparison, assumes formats like "v1.1.0" or "1.1.0"
+
             if (latestRelease.tagName.removePrefix("v") > currentVersion.removePrefix("v")) {
                 _updateState.value = latestRelease
             } else {
@@ -73,14 +72,14 @@ class AppUpdater(private val context: Context) {
     fun downloadAndInstall(release: GitHubRelease) {
         val apkAsset = release.assets.find { it.name.endsWith(".apk") }
         if (apkAsset == null) {
-            Toast.makeText(context, "No APK found in the release.", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.updater_toast_no_apk), Toast.LENGTH_LONG).show()
             return
         }
 
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(apkAsset.downloadUrl))
             .setTitle(release.name)
-            .setDescription("Downloading update...")
+            .setDescription(context.getString(R.string.updater_notification_description))
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, apkAsset.name)
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
@@ -88,6 +87,7 @@ class AppUpdater(private val context: Context) {
 
         val onComplete = object : BroadcastReceiver() {
             override fun onReceive(ctxt: Context, intent: Intent) {
+                // CORRECTED: Use the standard Android DownloadManager constant, not media3.
                 val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (id == downloadId) {
                     val downloadedFileUri = downloadManager.getUriForDownloadedFile(downloadId)

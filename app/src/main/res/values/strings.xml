@@ -78,8 +78,20 @@
 
     <!-- Strings for the Settings Screen (SettingsScreen.kt) -->
     <string name="settings_title">Settings</string>
-    <string name="settings_placeholder_text">App settings will be configured here in a future update.</string>
+    <string name="settings_language_label">Language</string>
+    <string name="settings_language_system_default">Default language</string>
 
     <!-- Strings for the App Shell (TheZodiacAppShell.kt) -->
     <string name="shell_menu_content_description">Menu</string>
+
+    <!-- Strings for the Update Dialog (UpdaterDialog.kt) -->
+    <string name="updater_dialog_title">Update Available!</string>
+    <string name="updater_dialog_text">A new version (%1$s) is available. Do you want to download it?  Release Notes: %2$s</string>
+    <string name="updater_dialog_confirm_button">Download</string>
+    <string name="updater_dialog_dismiss_button">Later</string>
+
+    <!-- Strings for the Updater Logic (Updater.kt) -->
+    <string name="updater_toast_no_apk">No APK found in the release.</string>
+    <string name="updater_notification_description">Downloading update...</string>
+
 </resources>

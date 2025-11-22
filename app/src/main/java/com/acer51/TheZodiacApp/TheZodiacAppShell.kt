@@ -1,12 +1,20 @@
 package com.acer51.TheZodiacApp
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.*
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,12 +37,13 @@ fun TheZodiacAppShell() {
         updater.checkForUpdates()
     }
 
-    // If an update is found, show the dialog
-    release?.let {
+    // CORRECTED: Capture the state value in a local variable to enable a safe smart cast.
+    val currentRelease = release
+    if (currentRelease != null) {
         UpdateDialog(
-            release = it,
+            release = currentRelease,
             onConfirm = {
-                updater.downloadAndInstall(it)
+                updater.downloadAndInstall(currentRelease)
                 updater.dismissUpdate() // Hide dialog after starting download
             },
             onDismiss = {
@@ -50,15 +59,61 @@ fun TheZodiacAppShell() {
     }
 
     ModalNavigationDrawer(
-        // ... (rest of your ModalNavigationDrawer is unchanged)
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Spacer(modifier = Modifier.height(12.dp))
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Zodiac Signs") },
+                    selected = currentRoute == "zodiac",
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate("zodiac")
+                    }
+                )
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Settings") },
+                    selected = currentRoute == "settings",
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate("settings")
+                    }
+                )
+            }
+        }
     ) {
         Scaffold(
-            // ... (rest of your Scaffold is unchanged)
+            topBar = {
+                TopAppBar(
+                    title = { Text(currentTitle) },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        }) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        }
+                    }
+                )
+            }
         ) { paddingValues ->
-            androidx.navigation.NavHost(
-                // ... (rest of your NavHost is unchanged)
+            NavHost(
+                navController = navController,
+                startDestination = "zodiac",
+                modifier = Modifier.padding(paddingValues)
             ) {
-                // ...
+                composable(route = "zodiac") {
+                    ZodiacApp(paddingValues = paddingValues)
+                }
+                composable(route = "settings") {
+                    SettingsScreen()
+                }
+                // CORRECTED: The original file was likely missing this closing brace
             }
         }
     }
